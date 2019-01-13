@@ -11,7 +11,6 @@ export default {
 </script>
 
 <style>
-@import './assets/style/reset.less';
 
 .el-container {
      height: 100%;
