@@ -1,12 +1,15 @@
 <template>
-    <div>
-        ssss
+    <div class="page-mian">
+        <XHeader></XHeader>
     </div>
 </template>
 
 <script>
+import { XHeader } from 'vux'
+
 export default {
-    name: "clientHeader"
+    name: "clientHeader",
+    components: { XHeader }
 }
 </script>
 
