@@ -19,19 +19,19 @@ Vue.use(Vuex)
 
 Vue.prototype.$echarts = echarts
 
-router.beforeEach((to, from, next) => {
-    if (to.path == '/login') {
-        sessionStorage.removeItem('user');
-    }
-    let user = JSON.parse(sessionStorage.getItem('user'));
-    if (!user && to.path != '/login') {
-        next({
-            path: '/login'
-        });
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, from, next) => {
+//     if (to.path == '/login') {
+//         sessionStorage.removeItem('user');
+//     }
+//     let user = JSON.parse(sessionStorage.getItem('user'));
+//     if (!user && to.path != '/login') {
+//         next({
+//             path: '/login'
+//         });
+//     } else {
+//         next();
+//     }
+// });
 
 
 Vue.config.productionTip = false
