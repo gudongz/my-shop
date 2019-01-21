@@ -3,6 +3,7 @@
         <div class="left" ref="left">
             <ul>
                 <li 
+                    ref="menuList"
                     v-for="(item, index) in left" 
                     :key="index" 
                     :class="{current: currentIndex == index}"
@@ -85,56 +86,38 @@ export default {
                 probeType: 3
             })
             this.rights.on('scroll', (pos) => {
-                this.scrollY = Math.abs(Math.round(pos.y))
+                // this.scrollY = Math.abs(Math.round(pos.y))
+                this.scrollY = Math.abs(pos.y)
             })
+        },
+         _initLeftScroll(index){
+            let menu = this.$refs.menuList;
+            let el = menu[index];
+            this.lefts.scrollToElement(el,300,0,-300)
         },
         _getHeight() {
             let rightItems = this.$refs.right.getElementsByClassName('right-item-hook')
             let height = 0;
             this.listHeight.push(height)
-            for(let i = 0; i<rightItems.lenght; i++){
+            for(let i = 0; i < rightItems.length; i++){
                 let item = rightItems[i]
                 height+=item.clientHeight
-                this.listHeight.push(Height)
+                this.listHeight.push(height)
             }
+
         },
         selectItem(index, event) {
-            this.clickEvent = true
-            if(!event._constructed) {
-                return
-            }else {
-                let rightItems = this.$refs.right.getElementsByClassName('right-item-hook')
-                let el = rightItems[index]
-                this.rights.scrollToElement(el, 300)
-            }
+            this.scrollY = this.listHeight[index];
+            this.rights.scrollTo(0,-this.scrollY,200,)
         }
     },
     computed: {
         currentIndex() {
-            for(let i = 0; i < this.listHeight.lenght; i++){
-                let height = this.listHeight[i]
-                let height2 = this.listHeight[i+1]
-            //     if(!height2 || (this.scrollY >= height && this.scrollY < height2)){
-            //         if(this.clickEvent){
-            //             return i + 1
-            //         }else {
-            //             return i
-            //         }
-            //     }
-            // }
-            // return 0
-                if( !height2 || (this.scrollY >= height && this.scrollY < height2)) {
-                    return i
-                }
-                if(this.listHeight[this.listHeight.length-1] - this.$refs.right.clientHeight <= this.scrollY ) {
-                    if(this.clickTrue) {
-                        return this.currentNum
-                    }else{
-                        return (this.listHeight.length-1)
-                    }
-                }
-            }
-            return 0
+            const {scrollY,listHeight} = this;
+            return listHeight.findIndex((tops,index )=>{
+                this._initLeftScroll(index);  //调用左右联调滚动效果
+                return scrollY >= tops && scrollY < listHeight[index + 1]
+            })
         }
     }
 }
