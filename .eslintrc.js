@@ -53,5 +53,8 @@ module.exports = {
     // 'no-unused-vars': 0,
     // 要求或禁止末尾逗号
     // 'comma-dangle': 0
+  },
+  globals: {
+    // $: true
   }
 }
