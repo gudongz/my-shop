@@ -19,12 +19,11 @@
     </tabbar>
 </template>
 
-
 <script>
-import { Tabbar, TabbarItem } from "vux"
+import { Tabbar, TabbarItem } from 'vux'
 
 export default {
-    name: "commonFooter",
+    name: 'commonFooter',
     components: { Tabbar, TabbarItem },
     data() {
         return {

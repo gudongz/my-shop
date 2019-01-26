@@ -1,5 +1,4 @@
 
-
 // 数据库连接配置
 
 module.exports = {
@@ -11,4 +10,3 @@ module.exports = {
         port: '3306'
     }
 }
-

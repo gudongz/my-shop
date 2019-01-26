@@ -10,13 +10,13 @@
 import CommonFooter from './common/common_footer'
 import CommonHeader from './common/common_header'
 export default {
-    name: "ClientIndex",
+    name: 'ClientIndex',
     components: { CommonFooter, CommonHeader },
     data() {
         return {
             headerShow: true
         }
-    },
+    }
     // watch: {
     //     '$route': {
     //         handler(params) {
@@ -37,6 +37,5 @@ export default {
 .page-main {
     width: 100%;
 }
-
 
 </style>

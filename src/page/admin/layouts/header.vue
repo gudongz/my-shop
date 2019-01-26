@@ -6,12 +6,10 @@
 
 <script>
 export default {
-    name: "AdminHeader"
+    name: 'AdminHeader'
 }
 </script>
 
 <style lang="less" scoped>
-
-
 
 </style>

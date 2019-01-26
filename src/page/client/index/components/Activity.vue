@@ -25,18 +25,18 @@
 <script>
 import { Flexbox, FlexboxItem } from 'vux'
 export default {
-    name: "Activity",
+    name: 'Activity',
     components: { Flexbox, FlexboxItem },
     data() {
         return {
             imgList: [
-                { id: 0, url: '//i8.mifile.cn/v1/a1/5164e9a8-59d0-a748-e71b-7b70d57a4685!358x508.webp'},
-                { id: 1, url: '//i8.mifile.cn/v1/a1/2aed5408-5aa2-2444-5b1e-8b37b39dbf0b!358x252.webp'},
-                { id: 2, url: '//i8.mifile.cn/v1/a1/86954d3c-692f-55a1-2f6f-91fc5b2fd4e5!358x252.webp'},
-                { id: 3, url: '//i8.mifile.cn/v1/a1/d56ad54e-1841-6fe9-cde4-d6104a616bfc!720x280.webp'},
+                { id: 0, url: '//i8.mifile.cn/v1/a1/5164e9a8-59d0-a748-e71b-7b70d57a4685!358x508.webp' },
+                { id: 1, url: '//i8.mifile.cn/v1/a1/2aed5408-5aa2-2444-5b1e-8b37b39dbf0b!358x252.webp' },
+                { id: 2, url: '//i8.mifile.cn/v1/a1/86954d3c-692f-55a1-2f6f-91fc5b2fd4e5!358x252.webp' },
+                { id: 3, url: '//i8.mifile.cn/v1/a1/d56ad54e-1841-6fe9-cde4-d6104a616bfc!720x280.webp' }
             ]
         }
-    },
+    }
 }
 </script>
 
@@ -56,6 +56,5 @@ export default {
     height: 9rem;
     background: #eeeeee;
 }
-
 
 </style>

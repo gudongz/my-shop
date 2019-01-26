@@ -16,7 +16,7 @@ import MyCenter from '@/page/client/myCenter/myCenter'
 Vue.use(Router)
 
 export default new Router({
-    mode:"history",
+    mode: 'history',
     routes: [
         // 管理
         { path: '/admin', name: '管理登陆界面', component: Login },
@@ -25,7 +25,7 @@ export default new Router({
             component: Home,
             name: '管理',
             children: [
-                { path: '/admin/index', name: '首页', component: AdminIndex }, 
+                { path: '/admin/index', name: '首页', component: AdminIndex }
 
             ]
         },
@@ -39,20 +39,16 @@ export default new Router({
         },
 
         // 客户端
-        { 
-            path: '/client', 
-            name: '客户端', 
+        {
+            path: '/client',
+            name: '客户端',
             component: ClientHome,
             children: [
                 { path: '/index', name: '客户端首页', component: ClientIndex },
                 { path: '/classify', name: '分类', component: Classify },
                 { path: '/shopCar', name: '购物车', component: ShopCar },
-                { path: '/myCenter', name: '个人中心', component: MyCenter },
-            ] 
-        },
-
-
-        
-        
+                { path: '/myCenter', name: '个人中心', component: MyCenter }
+            ]
+        }
     ]
 })

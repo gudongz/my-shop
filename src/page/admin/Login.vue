@@ -31,51 +31,49 @@ export default {
             },
             rules2: {
                 account: [{
-                        required: true,
-                        message: '请输入账号',
-                        trigger: 'blur'
-                    },
-                ],
+                    required: true,
+                    message: '请输入账号',
+                    trigger: 'blur'
+                }],
                 checkPass: [{
-                        required: true,
-                        message: '请输入密码',
-                        trigger: 'blur'
-                    },
-                ]
+                    required: true,
+                    message: '请输入密码',
+                    trigger: 'blur'
+                }]
             },
             checked: true
-        };
+        }
     },
     methods: {
         handleSubmit2(ev) {
-            var _this = this;
+            var _this = this
             _this.$refs.ruleForm2.validate((valid) => {
                 if (valid) {
-                    _this.logining = true;
+                    _this.logining = true
                     var loginParams = {
                         username: this.ruleForm2.account,
                         password: this.ruleForm2.checkPass
-                    };
+                    }
                     apiLogin({}).then(res => {
                         console.log(res)
                     }).catch(err => {
-
+                        console.log(err)
                     })
-                    if (loginParams.username == "admin" && loginParams.password == "123456") {
-                        _this.logining = false;
-                        sessionStorage.setItem('user', JSON.stringify(loginParams));
-                        _this.$router.push({ path: '/index' });
+                    if (loginParams.username === 'admin' && loginParams.password === '123456') {
+                        _this.logining = false
+                        sessionStorage.setItem('user', JSON.stringify(loginParams))
+                        _this.$router.push({ path: '/index' })
                     } else {
-                        _this.logining = false;
+                        _this.logining = false
                         _this.$alert('用户名或密码错误！', '提示信息', {
                             confirmButtonText: '确定'
-                        });
+                        })
                     }
                 } else {
-                    console.log('error submit!!');
-                    return false;
+                    console.log('error submit!!')
+                    return false
                 }
-            });
+            })
         }
     }
 }

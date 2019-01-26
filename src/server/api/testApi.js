@@ -11,7 +11,7 @@ let conn = mysql.createConnection(models.mysql)
 conn.connect()
 
 let JsonWrite = function(res, ret) {
-    if(typeof ret === 'undefined'){
+    if(typeof ret === 'undefined') {
         res.json({
             code: '00001',
             msg: '操作失败'
@@ -24,14 +24,14 @@ let JsonWrite = function(res, ret) {
 router.get('/getAll', (req, res) => {
     let sql = $sql.test.getAll
     conn.query(sql, function(err, result) {
-        if(err){
+        if(err) {
             console.log(err)
         }
-        if(result){
+        if(result) {
             console.log('获取所有用户成功')
             JsonWrite(res, result)
         }
     })
 })
 
-module.exports = router;
+module.exports = router

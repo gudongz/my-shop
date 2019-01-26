@@ -7,24 +7,23 @@
 <script>
 import { XHeader } from 'vux'
 export default {
-    name: "CommonHeader",
+    name: 'CommonHeader',
     components: { XHeader },
     data() {
         return {
-            title: "",
+            title: '',
             headerShow: false
         }
     },
     watch: {
         '$route': {
             handler(params) {
-                if(params.path == '/index' || params.path == "/myCenter" ) {
+                if (params.path === '/index' || params.path === '/myCenter') {
                     this.headerShow = false
-                }else {
+                } else {
                     this.headerShow = true
                     this.title = params.name
                 }
-
             },
             immediate: true
         }
@@ -33,7 +32,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
-
 
 </style>

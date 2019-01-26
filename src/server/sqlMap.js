@@ -1,7 +1,7 @@
 const sqlMap = {
     test: {
-        getAll : "select * from test"
+        getAll: 'select * from test'
     }
 }
 
-module.exports = sqlMap;
+module.exports = sqlMap

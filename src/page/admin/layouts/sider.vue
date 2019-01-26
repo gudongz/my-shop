@@ -23,16 +23,15 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">导航四</span>
             </el-menu-item>
-        </el-menu>   
+        </el-menu>
     </el-aside>
 </template>
 
 <script>
 export default {
-    name : "AdminSider"
+    name: 'AdminSider'
 }
 </script>
-
 
 <style lang="less" scoped>
 
@@ -48,6 +47,5 @@ export default {
     height: 48px;
     line-height: 48px;
 }
-
 
 </style>

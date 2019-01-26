@@ -3,10 +3,10 @@
         <Header></Header>
         <swiper class="swiper" :list="imgList"></swiper>
         <grid :cols="4" :show-lr-borders="false" :show-vertical-dividers="false">
-            <grid-item  
-                class="menu-item" 
-                v-for="(item, index) in menuItem" 
-                :key="index" 
+            <grid-item
+                class="menu-item"
+                v-for="(item, index) in menuItem"
+                :key="index"
                 :link="item.link"
             >
                 <i slot="icon" :class="['iconfont', item.icon]"></i>
@@ -29,7 +29,7 @@ import { Swiper, Grid, GridItem } from 'vux'
 import { apitest } from '@/api/index'
 
 export default {
-    name: "ClientIndex",
+    name: 'ClientIndex',
     components: { Header, Swiper, Grid, GridItem, Activity, Item },
     data() {
         return {
@@ -46,14 +46,14 @@ export default {
                 }
             ],
             menuItem: [
-                { label: "新品发布", icon: "icon-huangguan", link: "" },
-                { label: "超值特卖", icon: "icon-shangcheng1", link: "" },
-                { label: "每日精选", icon: "icon-flyme_icon-", link: "" },
-                { label: "活动频道", icon: "icon-shijianlishijilujishizhongbiaomianxing", link: "" },
-                { label: "以旧换新", icon: "icon-duoren1", link: "" },
-                { label: "电视热卖", icon: "icon-diannao", link: "" },
-                { label: "闪购", icon: "icon-shangcheng", link: "" },
-                { label: "全部", icon: "icon-hpncircle", link: "" },
+                { label: '新品发布', icon: 'icon-huangguan', link: '' },
+                { label: '超值特卖', icon: 'icon-shangcheng1', link: '' },
+                { label: '每日精选', icon: 'icon-flyme_icon-', link: '' },
+                { label: '活动频道', icon: 'icon-shijianlishijilujishizhongbiaomianxing', link: '' },
+                { label: '以旧换新', icon: 'icon-duoren1', link: '' },
+                { label: '电视热卖', icon: 'icon-diannao', link: '' },
+                { label: '闪购', icon: 'icon-shangcheng', link: '' },
+                { label: '全部', icon: 'icon-hpncircle', link: '' }
             ]
         }
     },

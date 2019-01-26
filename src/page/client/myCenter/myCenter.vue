@@ -4,18 +4,12 @@
     </div>
 </template>
 
-
-
 <script>
 export default {
-    name: "MyCenter",
+    name: 'MyCenter'
 }
 </script>
 
-
 <style lang="less" scoped>
 
-
-
 </style>
-

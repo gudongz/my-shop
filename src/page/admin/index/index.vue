@@ -6,24 +6,22 @@
 
 <script>
 export default {
-    name: "AdminIndex",
-    data(){
+    name: 'AdminIndex',
+    data() {
         return {
 
         }
     },
     mounted() {
-      
+
     },
     methods: {
-        
+
     }
 
 }
 </script>
 
 <style lang="less" scoped>
-
-
 
 </style>

@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { XHeader } from 'vux'
+// import { XHeader } from 'vux'
 
 export default {
-    name: "clientHeader",
-    components: { XHeader }
+    name: 'clientHeader'
+    // components: { XHeader }
 }
 </script>
 
@@ -61,7 +61,5 @@ export default {
 
     }
 }
-
-
 
 </style>

@@ -3,7 +3,6 @@
         <el-header class="header">
             <Header />
         </el-header>
-        
         <el-container>
             <Sider class="sider" />
 
@@ -13,25 +12,23 @@
         </el-container>
     </el-container>
 </template>
- 
+
 <script>
 import Header from './layouts/header'
 import Sider from './layouts/sider'
 
 export default {
-    name:'Home',
-    components: {Header, Sider},
+    name: 'Home',
+    components: { Header, Sider },
     data() {
         return {
-           
         }
-    },
-   
+    }
 
 }
- 
+
 </script>
- 
+
 <style scoped lang="less">
 .header {
     color: #fff;
@@ -41,11 +38,10 @@ export default {
 
 .sider {
     height: 100%;
-    
+
 }
-  
-.el-main{ 
+
+.el-main {
     background-color: #eee;
 }
 </style>
- 

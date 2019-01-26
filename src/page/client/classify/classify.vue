@@ -2,10 +2,10 @@
     <div class="container">
         <div class="left" ref="left">
             <ul>
-                <li 
+                <li
                     ref="menuList"
-                    v-for="(item, index) in left" 
-                    :key="index" 
+                    v-for="(item, index) in left"
+                    :key="index"
                     :class="{current: currentIndex == index}"
                     @click="selectItem(index, $event)"
                 >
@@ -36,34 +36,34 @@
 <script>
 import BetterScroll from 'better-scroll'
 export default {
-    name: "Classify",
+    name: 'Classify',
     data() {
         return {
-            left: ['数学', '语文', "英语", "物理", "化学", "其他"],
+            left: ['数学', '语文', '英语', '物理', '化学', '其他'],
             right: [
                 {
                     name: '数学',
-                    content: ['1',"2",'3','4','5','6','7']
+                    content: ['1', '2', '3', '4', '5', '6', '7']
                 },
                 {
                     name: '语文',
-                    content: ['1',"2",'3','4','5','6','7']
+                    content: ['1', '2', '3', '4', '5', '6', '7']
                 },
                 {
                     name: '英语',
-                    content: ['1',"2",'3','4','5','6','7']
+                    content: ['1', '2', '3', '4', '5', '6', '7']
                 },
                 {
                     name: '物理',
-                    content: ['1',"2",'3','4','5','6','7']
+                    content: ['1', '2', '3', '4', '5', '6', '7']
                 },
                 {
                     name: '化学',
-                    content: ['1',"2",'3','4','5','6','7']
+                    content: ['1', '2', '3', '4', '5', '6', '7']
                 },
                 {
                     name: '其他',
-                    content: ['1',"2",'3','4','5','6','7']
+                    content: ['1', '2', '3', '4', '5', '6', '7']
                 },
             ],
             listHeight: [],
@@ -90,32 +90,31 @@ export default {
                 this.scrollY = Math.abs(pos.y)
             })
         },
-         _initLeftScroll(index){
+        _initLeftScroll(index) {
             let menu = this.$refs.menuList;
             let el = menu[index];
-            this.lefts.scrollToElement(el,300,0,-300)
+            this.lefts.scrollToElement(el, 300, 0, -300)
         },
         _getHeight() {
             let rightItems = this.$refs.right.getElementsByClassName('right-item-hook')
             let height = 0;
             this.listHeight.push(height)
-            for(let i = 0; i < rightItems.length; i++){
+            for(let i = 0; i < rightItems.length; i++) {
                 let item = rightItems[i]
-                height+=item.clientHeight
+                height += item.clientHeight
                 this.listHeight.push(height)
             }
-
         },
         selectItem(index, event) {
             this.scrollY = this.listHeight[index];
-            this.rights.scrollTo(0,-this.scrollY,200,)
+            this.rights.scrollTo(0, -this.scrollY, 200)
         }
     },
     computed: {
         currentIndex() {
-            const {scrollY,listHeight} = this;
-            return listHeight.findIndex((tops,index )=>{
-                this._initLeftScroll(index);  //调用左右联调滚动效果
+            const { scrollY, listHeight } = this;
+            return listHeight.findIndex((tops, index) => {
+                this._initLeftScroll(index) // 调用左右联调滚动效果
                 return scrollY >= tops && scrollY < listHeight[index + 1]
             })
         }
@@ -165,6 +164,5 @@ export default {
 .current {
     background: red;
 }
-
 
 </style>
