@@ -12,6 +12,7 @@ import ClientIndex from '@/page/client/index/index'
 import Classify from '@/page/client/classify/classify'
 import ShopCar from '@/page/client/shopCar/shopCar'
 import MyCenter from '@/page/client/myCenter/myCenter'
+import ClientLogin from '@/page/client/login/ClientLogin'
 
 Vue.use(Router)
 
@@ -49,6 +50,7 @@ export default new Router({
                 { path: '/shopCar', name: '购物车', component: ShopCar },
                 { path: '/myCenter', name: '个人中心', component: MyCenter }
             ]
-        }
+        },
+        { path: '/client/login', name: '客户端登陆', component: ClientLogin }
     ]
 })

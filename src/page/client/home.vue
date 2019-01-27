@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import CommonFooter from './common/common_footer'
-import CommonHeader from './common/common_header'
+import CommonFooter from './components/common_footer'
+import CommonHeader from './components/common_header'
 export default {
     name: 'ClientIndex',
     components: { CommonFooter, CommonHeader },

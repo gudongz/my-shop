@@ -1,6 +1,8 @@
 <template>
     <div v-if="headerShow">
-        <x-header :left-options="{backText: ''}">{{title}}</x-header>
+        <x-header :left-options="{backText: ''}">{{title}}
+            <i slot="right" class="iconfont icon-sousuo search"></i>
+        </x-header>
     </div>
 </template>
 
@@ -32,5 +34,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.search {
+    font-size: 1.3rem;
+    color: #828282;
+}
 </style>

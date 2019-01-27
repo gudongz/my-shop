@@ -1,15 +1,20 @@
 <template>
     <div class="header">
-        <div class="user">
+        <div class="user" @click="goLogin">
             <img src="../../../../assets/people.png" alt="用户">
         </div>
-        <div class="login">登陆/注册</div>
+        <div class="login" @click="goLogin">登陆/注册</div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'CenterHeader'
+    name: 'CenterHeader',
+    methods: {
+        goLogin() {
+            this.$router.push('/client/login')
+        }
+    }
 }
 </script>
 

@@ -1,21 +1,27 @@
 <template>
     <div>
-        <!-- 点击每一项都要跳转到详细页面  需要id -->
-        <h2 class="header-title">{{obj.title}}</h2>
-        <div class="header-item">
-            <img :src="obj.headerItem.url" alt="">
-        </div>
-        <shop-list></shop-list>
+        <flexbox class="item" :gutter="0"  wrap="wrap" justify="space-between">
+            <flexbox-item :span="6" v-for="(item, index) in obj.listData" :key="item.id">
+                <div :class="{'item': true, 'item-padding-right': index % 2 === 0, 'item-padding-left': index % 2 !== 0}">
+                    <div class="img-box">
+                        <img :src="item.url" alt="">
+                    </div>
+                    <div class="conent">
+                        <p class="title">{{item.title}}</p>
+                        <p class="msg">{{item.msg}}</p>
+                        <p class="price">￥{{item.price}}</p>
+                    </div>
+                </div>
+            </flexbox-item>
+        </flexbox>
     </div>
 </template>
 
 <script>
-import ShopList from '../../components/ShopList'
+import { Flexbox, FlexboxItem } from 'vux'
 export default {
-    name: 'Item',
-    components: {
-        ShopList
-    },
+    name: 'ShopList',
+    components: { Flexbox, FlexboxItem },
     data() {
         return {
             obj: {
@@ -39,19 +45,37 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
-.header-title {
-    height: 2.5rem;
-    line-height: 2.5rem;
-    padding-left: .8rem;
-}
-
-.header-item {
-    height: 9rem;
-    img {
-        height: 100%;
-        width: 100%;
+.item {
+    box-sizing: border-box;
+    width: 100%;
+    .img-box {
+        height: 11.5rem;
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .conent {
+        padding: .4rem .8rem;
+        .title {
+            font-size: .9rem;
+        }
+        .msg {
+            margin-top: .2rem;
+            font-size: .7rem;
+            color: rgba(0,0,0,.54);
+        }
+        .price {
+            margin-top: .2rem;
+            font-size: .9rem;
+            color: #ea625b;
+        }
     }
 }
-
+.item-padding-right {
+    padding-right: .1rem;
+}
+.item-padding-left {
+    padding-left: .1rem;
+}
 </style>
