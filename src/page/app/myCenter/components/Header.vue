@@ -12,7 +12,7 @@ export default {
     name: 'CenterHeader',
     methods: {
         goLogin() {
-            this.$router.push('/client/login')
+            this.$router.push('/app/login')
         }
     }
 }
