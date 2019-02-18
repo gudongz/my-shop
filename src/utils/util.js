@@ -1,15 +1,15 @@
 
 import Vue from 'vue'
-/**
- * 加载遮罩层
- * @param {string} str [需要加遮罩的dom classname]
- */
-export function load(str) {
-    let option ={
-        target: str,
-        lock: true,
-        fullscreen: false,
-        text: "拼命加载中..."
+
+// 根据返回状态码，进行消息提示
+export function $message(code, msg) {
+    console.log(code)
+    switch (code) {
+    case '00000':
+        Vue.prototype.$message.success(msg)
+        break
+    default:
+        Vue.prototype.$message.error(msg)
+        break
     }
-    return Vue.prototype.$loading(option)
 }

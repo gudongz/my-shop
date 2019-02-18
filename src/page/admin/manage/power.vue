@@ -7,20 +7,13 @@
 <script>
 import BreadCrumb from '../components/base-breadcrumb'
 export default {
-    name: 'AdminIndex',
+    name: 'PowerManage',
     components: { BreadCrumb },
     data() {
         return {
-            breadcrumbList: ['首页']
+            breadcrumbList: ['权限管理']
         }
-    },
-    mounted() {
-
-    },
-    methods: {
-
     }
-
 }
 </script>
 

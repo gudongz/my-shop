@@ -7,20 +7,13 @@
 <script>
 import BreadCrumb from '../components/base-breadcrumb'
 export default {
-    name: 'AdminIndex',
+    name: 'OrdersManage',
     components: { BreadCrumb },
     data() {
         return {
-            breadcrumbList: ['首页']
+            breadcrumbList: ['订单管理']
         }
-    },
-    mounted() {
-
-    },
-    methods: {
-
     }
-
 }
 </script>
 

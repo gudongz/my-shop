@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://127.0.0.1:3000',
+        // target: 'http://127.0.0.1:3000',
+        target: 'https://easy-mock.com/mock/5c6a6c47fec84e412d86accf/shop',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'

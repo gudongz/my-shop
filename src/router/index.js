@@ -5,6 +5,10 @@ import Router from 'vue-router'
 import Login from '@/page/admin/Login'
 import Home from '@/page/admin/Home'
 import AdminIndex from '@/page/admin/index/index'
+import ShopManage from '@/page/admin/manage/shop'
+import UserManage from '@/page/admin/manage/user'
+import PowerManage from '@/page/admin/manage/power'
+import OrdersManage from '@/page/admin/manage/orders'
 
 // 客户端
 import ClientHome from '@/page/app/home'
@@ -22,13 +26,17 @@ export default new Router({
     mode: 'history',
     routes: [
         // 管理
-        { path: '/admin', name: '管理登陆界面', component: Login },
+        { path: '/admin/login', name: '管理登陆界面', component: Login },
         {
             path: '',
             component: Home,
             name: '管理',
             children: [
-                { path: '/admin/index', name: '首页', component: AdminIndex }
+                { path: '/admin/index', name: '首页', component: AdminIndex },
+                { path: '/admin/shop', name: '商品管理', component: ShopManage },
+                { path: '/admin/user', name: '用户管理', component: UserManage },
+                { path: '/admin/power', name: '权限管理', component: PowerManage },
+                { path: '/admin/orders', name: '订单管理', component: OrdersManage }
 
             ]
         },

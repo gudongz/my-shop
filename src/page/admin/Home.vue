@@ -5,10 +5,9 @@
         </el-header>
         <el-container>
             <Sider class="sider" />
-
-            <el-main>
-                <router-view></router-view>
-            </el-main>
+                <el-main>
+                    <router-view></router-view>
+                </el-main>
         </el-container>
     </el-container>
 </template>
@@ -36,12 +35,8 @@ export default {
     border-bottom: 1px solid #eee;
 }
 
-.sider {
-    height: 100%;
-
-}
-
 .el-main {
+    padding-top: 10px;
     background-color: #eee;
 }
 </style>

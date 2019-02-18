@@ -1,6 +1,6 @@
 import axios from 'axios'
-import QS from 'qs'
-
+// import QS from 'qs'
+import Vue from 'vue'
 // axios.defaults.baseURL = 'http://10.88.10.31:5638'
 
 /**
@@ -18,7 +18,8 @@ import QS from 'qs'
 // axios.defaults.timeout = 10000;
 
 // 设置请求头
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
 /**
  * 请求拦截器
@@ -40,11 +41,27 @@ axios.interceptors.response.use(response => {
     return response
 }, error => {
     // 检测错误状态吗，提示信息
-    if (error.response.status) {
-        // some code
-        console.log(error.response.status)
-        console.log(error.response)
-
+    // 检测错误状态吗，提示信息
+    if (error && error.response) {
+        switch (error.response.status) {
+        case 400:
+            Vue.prototype.$message.error('请求错误')
+            break
+        case 403:
+            Vue.prototype.$message.error('拒绝访问')
+            break
+        case 404:
+            Vue.prototype.$message.error(`请求地址出错: ${error.response.config.url}`)
+            break
+        case 408:
+            Vue.prototype.$message.error('请求超时')
+            break
+        case 500:
+            Vue.prototype.$message.error('服务器内部错误')
+            break
+        default:
+            Vue.prototype.$message.error('发生异常')
+        }
         return Promise.reject(error.response)
     }
 })
@@ -74,7 +91,8 @@ export function get(url, params) {
 export function post(url, params) {
     return new Promise((resolve, reject) => {
         axios.post(url,
-            QS.stringify(params)
+            params
+            // QS.stringify(params)
         ).then(res => {
             resolve(res.data)
         }).catch(err => {

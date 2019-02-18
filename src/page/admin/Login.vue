@@ -18,6 +18,7 @@
 
 <script>
 import { apiLogin } from '@/api/index.js'
+import { $message } from '@/utils/util'
 
 export default {
     props: {
@@ -26,8 +27,8 @@ export default {
         return {
             logining: false,
             ruleForm2: {
-                account: 'admin',
-                checkPass: '123456'
+                account: '17739019681',
+                checkPass: '123'
             },
             rules2: {
                 account: [{
@@ -50,27 +51,24 @@ export default {
             _this.$refs.ruleForm2.validate((valid) => {
                 if (valid) {
                     _this.logining = true
-                    var loginParams = {
-                        username: this.ruleForm2.account,
+                    apiLogin({
+                        phone: this.ruleForm2.account,
                         password: this.ruleForm2.checkPass
-                    }
-                    apiLogin({}).then(res => {
-                        console.log(res)
-                    }).catch(err => {
-                        console.log(err)
+                    }).then(res => {
+                        $message(res.code, res.message)
+                        if (res.code === '00000') {
+                            sessionStorage.setItem('adminUserInfo', JSON.stringify(res.data))
+                            _this.logining = false
+                            _this.$router.push({ path: '/admin/index' })
+                        } else {
+                            _this.logining = false
+                        }
+                    }).catch(error => {
+                        if (error) {
+                            _this.logining = false
+                        }
                     })
-                    if (loginParams.username === 'admin' && loginParams.password === '123456') {
-                        _this.logining = false
-                        sessionStorage.setItem('user', JSON.stringify(loginParams))
-                        _this.$router.push({ path: '/index' })
-                    } else {
-                        _this.logining = false
-                        _this.$alert('用户名或密码错误！', '提示信息', {
-                            confirmButtonText: '确定'
-                        })
-                    }
                 } else {
-                    console.log('error submit!!')
                     return false
                 }
             })
@@ -98,5 +96,6 @@ label.el-checkbox.remember {
 }
 .title{
     text-align: center;
+    padding-bottom: 20px;
 }
 </style>
