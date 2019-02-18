@@ -6,12 +6,14 @@
             <i class="iconfont icon-sousuo right-icon"></i>
         </div>
         <div class="container" ref="container">
-            <shop-item></shop-item>
-            <shop-item></shop-item>
-            <shop-item></shop-item>
-            <shop-item></shop-item>
-            <shop-item></shop-item>
-            <shop-item></shop-item>
+            <div>
+                <shop-item></shop-item>
+                <shop-item></shop-item>
+                <shop-item></shop-item>
+                <shop-item></shop-item>
+                <shop-item></shop-item>
+                <shop-item></shop-item>
+            </div>
         </div>
     </div>
 </template>
@@ -55,7 +57,11 @@ export default {
     }
 }
 .container {
-    height: 500px;
+    position: fixed;
+    top: 46px;
+    bottom: 0;
+    right: 0;
+    left: 0;
     overflow: hidden;
 }
 </style>

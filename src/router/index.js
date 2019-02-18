@@ -19,6 +19,7 @@ import MyCenter from '@/page/app/myCenter/myCenter'
 import ClientLogin from '@/page/app/login/ClientLogin'
 import Search from '@/page/app/search/search'
 import SearchResult from '@/page/app/searchResult/searchResult'
+import ShopDetail from '@/page/app/shopDetail/detail'
 
 Vue.use(Router)
 
@@ -63,6 +64,7 @@ export default new Router({
         },
         { path: '/app/search', name: '搜索', component: Search },
         { path: '/app/searchResult', name: '搜索结果', component: SearchResult },
-        { path: '/app/login', name: '客户端登陆', component: ClientLogin }
+        { path: '/app/login', name: '客户端登陆', component: ClientLogin },
+        { path: '/app/shopDetail', name: '商品详情', component: ShopDetail }
     ]
 })
