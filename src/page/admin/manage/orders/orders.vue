@@ -5,19 +5,19 @@
 </template>
 
 <script>
-import BreadCrumb from '../components/base-breadcrumb'
+import BreadCrumb from '../../components/base-breadcrumb'
 export default {
-    name: 'UserManage',
+    name: 'OrdersManage',
     components: { BreadCrumb },
     data() {
         return {
-            breadcrumbList: ['用户管理']
+            breadcrumbList: ['订单管理']
         }
     }
 }
 </script>
 
 <style lang="less" scoped>
-@import '../../../assets/style/main.less';
+@import '../../../../assets/style/main.less';
 
 </style>

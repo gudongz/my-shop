@@ -5,16 +5,9 @@
             :router="true"
             :default-active="$route.path"
         >
-            <el-submenu index="1">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>导航一</span>
-                </template>
-                <el-menu-item index=""><i class="el-icon-setting"></i>选项1</el-menu-item>
-            </el-submenu>
             <el-menu-item index="/admin/index">
                 <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
+                <span slot="title">首页</span>
             </el-menu-item>
             <el-menu-item index="/admin/shop">
                 <i class="el-icon-document"></i>
@@ -24,10 +17,15 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">导航四</span>
             </el-menu-item>
-            <el-menu-item index="/admin/power">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航五</span>
-            </el-menu-item>
+            <el-submenu index="1">
+                <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span>系统管理</span>
+                </template>
+                <el-menu-item index="/admin/role"><i class="el-icon-setting"></i>角色管理</el-menu-item>
+                <el-menu-item index="/admin/power"><i class="el-icon-setting"></i>权限管理</el-menu-item>
+                <el-menu-item index="/admin/adminUser"><i class="el-icon-setting"></i>用户管理</el-menu-item>
+            </el-submenu>
         </el-menu>
     </el-aside>
 </template>

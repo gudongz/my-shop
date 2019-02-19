@@ -55,6 +55,6 @@ module.exports = {
     // 'comma-dangle': 0
   },
   globals: {
-    // $: true
+    $: true
   }
 }

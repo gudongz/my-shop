@@ -1,11 +1,19 @@
 import { get, post } from '../axios/index'
 
-/********************************************************
- * 登陆 api
- ********************************************************/
-
 // 登陆
 export const apiLogin = (params) => { return post('/api/admin/login', params) }
+
+/******  系统管理   ******/
+// 权限管理  ==> 获取全部权限
+export const apiGetAllPower = (params) => { return get('/api/admin/getAllPower', params) }
+// 角色管理  ==> 获取全部角色
+export const apiGetAllRole = (params) => { return get('/api/admin/getAllRole', params) }
+// 角色管理  ==> 获取全部角色
+export const apiGetPowerByRoleId = (params) => { return get('/api/admin/getPowerByRoleId', params) }
+// 角色管理  ==> 更新角色权限
+export const apiEditRolePower = (params) => { return post('/api/admin/editRolePower', params) }
+// 角色管理  ==> 角色修改 / 增加
+export const apiAddOrUpdateRole = (params) => { return post('/api/admin/addOrUpdateRole', params) }
 
 // 登陆
 export const apitest = (params) => { return get('/api/test/getAll', params) }

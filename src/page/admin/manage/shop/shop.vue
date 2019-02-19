@@ -1,7 +1,7 @@
 <template>
     <div class="page-main">
         <bread-crumb :list="breadcrumbList"></bread-crumb>
-        <div class="search-group clearnFloat">
+        <div class="header-group clearnFloat">
             <el-row :gutter="20">
                 <el-col :xl="2" :lg="2" :md="2" :sm="4">
                     <el-button type="primary" size="mini">添加</el-button>
@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import BreadCrumb from '../components/base-breadcrumb'
-import Pagination from '../components/base-pagination'
+import BreadCrumb from '../../components/base-breadcrumb'
+import Pagination from '../../components/base-pagination'
 export default {
     name: 'ShopManage',
     components: { BreadCrumb, Pagination },
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '../../../assets/style/main.less';
+@import '../../../../assets/style/main.less';
 
 .date-picker {
     width: 200px;

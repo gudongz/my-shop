@@ -5,10 +5,12 @@ import Router from 'vue-router'
 import Login from '@/page/admin/Login'
 import Home from '@/page/admin/Home'
 import AdminIndex from '@/page/admin/index/index'
-import ShopManage from '@/page/admin/manage/shop'
-import UserManage from '@/page/admin/manage/user'
-import PowerManage from '@/page/admin/manage/power'
-import OrdersManage from '@/page/admin/manage/orders'
+import ShopManage from '@/page/admin/manage/shop/shop'
+import UserManage from '@/page/admin/manage/appUser/app-user'
+import PowerManage from '@/page/admin/manage/power/power'
+import AdminUserManage from '@/page/admin/manage/power/admin-user'
+import RoleManage from '@/page/admin/manage/power/role'
+import OrdersManage from '@/page/admin/manage/orders/orders'
 
 // 客户端
 import ClientHome from '@/page/app/home'
@@ -37,6 +39,8 @@ export default new Router({
                 { path: '/admin/shop', name: '商品管理', component: ShopManage },
                 { path: '/admin/user', name: '用户管理', component: UserManage },
                 { path: '/admin/power', name: '权限管理', component: PowerManage },
+                { path: '/admin/adminUser', name: '管理员用户管理', component: AdminUserManage },
+                { path: '/admin/role', name: '角色管理', component: RoleManage },
                 { path: '/admin/orders', name: '订单管理', component: OrdersManage }
 
             ]
