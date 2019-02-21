@@ -22,7 +22,15 @@ import Pagination from '@/page/admin/components/base-pagination'
 import UserEditForm from './components/user-edit-form'
 import UserRoleList from './components/user-role-list'
 
-import { apiGetAdminUserList, apiGetRoleByUserId } from '@/api/index'
+import {
+    apiGetAdminUserList,
+    apiGetRoleByUserId,
+    apiUpdateOrAddUser,
+    apiUpdateUserRole,
+    apiDeleteAdminUser
+} from '@/api/index'
+
+import { $message } from '@/utils/util'
 
 export default {
     name: 'PowerManage',
@@ -98,6 +106,17 @@ export default {
         // 保存用户分配的角色
         saveUserRole(params) {
             console.log(params)
+            apiUpdateUserRole({
+                ...params
+            }).then(res => {
+                $message(res.code, res.message)
+                this.roleListData.isShow = false
+                this.getAdminUserList({
+                    name: this.searchInput,
+                    pageIndex: 1,
+                    pageSize: 10
+                })
+            })
         },
         handleSearch() {
             this.getAdminUserList({
@@ -118,13 +137,30 @@ export default {
                 }
             }
         },
-        // 修改提交
+        // 增加用户 或 修改用户 提交
         submit(params) {
+            apiUpdateOrAddUser({
+                ...params
+            }).then(res => {
+                $message(res.code, res.message)
+                this.editFormData.isShow = false
+                this.getAdminUserList({
+                    name: this.searchInput,
+                    pageIndex: this.pageData.pageIndex,
+                    pageSize: 10
+                })
+            })
             console.log(params)
         },
         // 页数改变
         handlePageChange(index) {
             console.log(index)
+            this.pageData.pageIndex = index
+            this.getAdminUserList({
+                name: this.searchInput,
+                pageIndex: index,
+                pageSize: 10
+            })
         },
         handle(data) {
             // 判断用户操作，0 分配角色，1 修改， 2 更改用户状态
@@ -147,6 +183,14 @@ export default {
                     }
                 },
                 2: () => {
+                    apiDeleteAdminUser({ id: data.data.id }).then(res => {
+                        $message(res.code, res.message)
+                        this.getAdminUserList({
+                            name: this.searchInput,
+                            pageIndex: this.pageData.pageIndex,
+                            pageSize: 10
+                        })
+                    })
                 }
             }
             mapHandle[data.type]()

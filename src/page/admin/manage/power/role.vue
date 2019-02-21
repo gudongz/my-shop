@@ -86,6 +86,7 @@ export default {
             mapHandle[data.type]()
         },
         submit(data) {
+            console.log(data)
             apiAddOrUpdateRole({
                 ...data
             }).then(res => {
