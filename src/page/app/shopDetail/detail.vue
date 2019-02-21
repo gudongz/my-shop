@@ -1,19 +1,22 @@
 <template>
     <div>
         <detail-header></detail-header>
-        <swiper class="swiper" :list="imgList"></swiper>
+        <swiper class="swiper" :list="imgList" height="400px"></swiper>
+        <shop-tilte></shop-tilte>
     </div>
 </template>
 
 <script>
 import DetailHeader from './components/DetailHeader'
+import ShopTilte from './components/ShopTitle'
 import { Swiper } from 'vux'
 
 export default {
     name: 'ShopDetail',
     components: {
         DetailHeader,
-        Swiper
+        Swiper,
+        ShopTilte
     },
     data () {
         return {
