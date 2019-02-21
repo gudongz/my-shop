@@ -14,6 +14,9 @@ export const apiGetPowerByRoleId = (params) => { return get('/api/admin/getPower
 export const apiEditRolePower = (params) => { return post('/api/admin/editRolePower', params) }
 // 角色管理  ==> 角色修改 / 增加
 export const apiAddOrUpdateRole = (params) => { return post('/api/admin/addOrUpdateRole', params) }
-
+// 用户管理 ==> 获取全部用户
+export const apiGetAdminUserList = (params) => { return get('/api/admin/getAdminUserList', params) }
+// 用户管理 ==> 根据用户id获取角色
+export const apiGetRoleByUserId = (params) => { return get('/api/admin/getRoleByUserId', params) }
 // 登陆
 export const apitest = (params) => { return get('/api/test/getAll', params) }
