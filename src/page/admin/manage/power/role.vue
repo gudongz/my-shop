@@ -14,7 +14,7 @@
 
 <script>
 import BreadCrumb from '../../components/base-breadcrumb'
-import CommonTable from './components/common-table'
+import CommonTable from '../components/common-table'
 import RoleEditForm from './components/role-edit-form'
 import RoleAllocation from './components/role-allocation'
 import {

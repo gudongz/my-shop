@@ -3,7 +3,7 @@ import { get, post } from '../axios/index'
 // 登陆
 export const apiLogin = (params) => { return post('/api/admin/login', params) }
 
-/******  系统管理   ******/
+/* * * * * *  系统管理   * * * * * */
 // 权限管理  ==> 获取全部权限
 export const apiGetAllPower = (params) => { return get('/api/admin/getAllPower', params) }
 // 角色管理  ==> 获取全部角色
@@ -25,5 +25,9 @@ export const apiUpdateUserRole = (params) => { return post('/api/admin/updateUse
 // 用户管理 ==> 设置用户为无效状态
 export const apiDeleteAdminUser = (params) => { return post('/api/admin/deleteAdminUser', params) }
 
+/* * * * * *  商品管理   * * * * * */
+// 用户管理 ==> 设置用户为无效状态
+export const apiGetGoods = (params) => { return get('/api/admin/getGoods', params) }
+
 // 登陆
-export const apitest = (params) => { return get('/api/test/getAll', params) }
+// export const apitest = (params) => { return get('/api/test/getAll', params) }

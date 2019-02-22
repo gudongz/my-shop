@@ -17,7 +17,7 @@
 
 <script>
 import BreadCrumb from '../../components/base-breadcrumb'
-import CommonTable from './components/common-table'
+import CommonTable from '../components/common-table'
 import Pagination from '@/page/admin/components/base-pagination'
 import UserEditForm from './components/user-edit-form'
 import UserRoleList from './components/user-role-list'
