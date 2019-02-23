@@ -34,8 +34,8 @@ export default {
 
 <style lang="less" scoped>
 
-.page-main {
-    width: 100%;
-}
+// .page-main {
+//     width: 100%;
+// }
 
 </style>

@@ -38,7 +38,7 @@ export default {
     },
     data() {
         return {
-            left: ['新品', '众筹', '手机', '电视', '电脑', '家电', '路由', '出行', '穿戴', '智能', '电源', '健康', '灯具', '儿童', '插线板', '音频', '生活', '配件'],
+            left: ['手机', '电脑'],
             right: [
                 {
                     titleid: '0',
@@ -71,33 +71,6 @@ export default {
                     titleid: '1',
                     img: '//i8.mifile.cn/v1/a1/7f76151f-0f4e-c398-ad4b-5ce8d2e17369!500x200.webp',
                     title: '众筹',
-                    children: [
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        }
-                    ]
-                },
-                {
-                    titleid: '2',
-                    img: '//i8.mifile.cn/v1/a1/7f76151f-0f4e-c398-ad4b-5ce8d2e17369!500x200.webp',
-                    title: '手机',
                     children: [
                         {
                             id: '0',

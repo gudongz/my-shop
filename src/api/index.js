@@ -30,4 +30,4 @@ export const apiDeleteAdminUser = (params) => { return post('/api/admin/deleteAd
 export const apiGetGoods = (params) => { return get('/api/admin/getGoods', params) }
 
 // 登陆
-// export const apitest = (params) => { return get('/api/test/getAll', params) }
+export const apitest = (params) => { return get('/api/shop/getAll', params) }

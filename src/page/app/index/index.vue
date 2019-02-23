@@ -57,6 +57,9 @@ export default {
             ]
         }
     },
+    mounted() {
+        this.test()
+    },
     methods: {
         test() {
             apitest().then(res => {
@@ -70,9 +73,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// .swiper {
-//     margin-top: 2.9rem;
-// }
+.swiper {
+    margin-top: 46px;
+}
 .container {
     margin-top: .5rem;
     margin-bottom: 3.5rem;

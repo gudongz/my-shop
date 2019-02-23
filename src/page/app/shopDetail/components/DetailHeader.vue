@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="back">
+        <div class="back" @click="back">
             <i class="iconfont icon-houtui"></i>
         </div>
     </div>
@@ -9,7 +9,12 @@
 <script>
 
 export default {
-    name: 'DetailHeader'
+    name: 'DetailHeader',
+    methods: {
+        back() {
+            this.$router.go(-1)
+        }
+    }
 }
 </script>
 

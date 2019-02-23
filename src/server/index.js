@@ -1,10 +1,9 @@
 const express = require('express')
 const app = express()
 // const bodyParser = require('body-parser')
+let routes = require('./api/index')
 
-const testApi = require('./api/testApi')
-
-app.use('/test', testApi)
+routes(app)
 
 let server = app.listen(3000, function() {
     let host = server.address().address

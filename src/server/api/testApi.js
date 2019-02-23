@@ -1,37 +1,34 @@
-let models = require('../DB')
 let express = require('express')
-let router = express.Router()
-let mysql = require('mysql')
 let $sql = require('../sqlMap')
-
-// 连接数据库
-
-let conn = mysql.createConnection(models.mysql)
-
-conn.connect()
+let mysql = require('../dbConnect')
+let router = express.Router()
 
 let JsonWrite = function(res, ret) {
-    if(typeof ret === 'undefined') {
+    if (typeof ret === 'undefined') {
         res.json({
             code: '00001',
-            msg: '操作失败'
+            message: '操作失败！'
         })
     } else {
-        res.json(ret)
+        res.json({
+            code: '00000',
+            message: '操作成功！',
+            result: ret
+        })
     }
 }
-// 测试
+
 router.get('/getAll', (req, res) => {
+    //允许跨域
+    // res.header('Access-Control-Allow-Origin', '*')
+    // res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
+    // res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+    // res.header('Access-Control-Allow-Headers', 'Content-Type')
     let sql = $sql.test.getAll
-    conn.query(sql, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        if(result) {
-            console.log('获取所有用户成功')
+    mysql.connect(sql, (result) => {
+        if (result) {
             JsonWrite(res, result)
         }
     })
 })
-
 module.exports = router

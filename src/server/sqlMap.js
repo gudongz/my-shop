@@ -1,6 +1,6 @@
 const sqlMap = {
     test: {
-        getAll: 'select * from test'
+        getAll: 'select * from goods'
     }
 }
 

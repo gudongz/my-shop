@@ -20,6 +20,7 @@ export default {
 
 <style lang="less" scoped>
 .header {
+    margin-top: 46px;
     display: flex;
     justify-content: start;
     align-items: center;

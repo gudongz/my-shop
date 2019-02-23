@@ -38,6 +38,7 @@ export default {
     }
 }
 .noLoginMsg {
+    margin-top: 46px;
     display: flex;
     justify-content: space-between;
     align-items: center;

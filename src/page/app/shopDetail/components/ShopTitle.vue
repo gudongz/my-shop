@@ -14,7 +14,7 @@ export default {
 
 <style lang="less" scoped>
 .section {
-    padding: 20px 15px;
+    padding: 20px 15px 0 15px;
     .shop-name {
         font-size: 22px;
     }

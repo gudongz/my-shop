@@ -3,12 +3,21 @@
         <detail-header></detail-header>
         <swiper class="swiper" :list="imgList" height="400px"></swiper>
         <shop-tilte></shop-tilte>
+        <div class="choose">
+            <span>已选</span>
+            <p>红米Note7 全网通 6+64 亮黑色 x 1</p>
+            <i class="iconfont icon-houtui"></i>
+        </div>
+        <detail-image :img-list="imgList"></detail-image>
+        <buy></buy>
     </div>
 </template>
 
 <script>
 import DetailHeader from './components/DetailHeader'
+import DetailImage from './components/DetailImage'
 import ShopTilte from './components/ShopTitle'
+import Buy from './components/Buy'
 import { Swiper } from 'vux'
 
 export default {
@@ -16,7 +25,9 @@ export default {
     components: {
         DetailHeader,
         Swiper,
-        ShopTilte
+        ShopTilte,
+        DetailImage,
+        Buy
     },
     data () {
         return {
@@ -47,5 +58,24 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.choose {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 15px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    background-color: #fafafa;
+    span, i {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.54);
+    }
+    p {
+        font-size: 14px;
+        color: rgba(0,0,0,.87);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
 </style>
