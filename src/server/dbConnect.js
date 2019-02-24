@@ -9,11 +9,11 @@ let db = {
     port: '3306'
 }
 
-exports.connect = (sql, callback) => {
+exports.connect = (sql, params, callback) => {
     let conn = mysql.createConnection(db)
     conn.connect()
     console.log('connect database is success!')
-    conn.query(sql, (error, result) => {
+    conn.query(sql, params, (error, result) => {
         if (error) {
             console.log('[select error - ]', error.message)
             return

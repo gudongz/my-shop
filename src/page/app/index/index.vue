@@ -26,7 +26,7 @@ import Activity from './components/Activity'
 import Item from './components/Item'
 import { Swiper, Grid, GridItem } from 'vux'
 
-import { apitest } from '@/api/index'
+import { apiGetHotGoods, apiGetAllGoods } from '@/api/index'
 
 export default {
     name: 'ClientIndex',
@@ -58,14 +58,22 @@ export default {
         }
     },
     mounted() {
-        this.test()
+        this.getHotGoods({ hot: 1 })
+        this.getAllGoods()
     },
     methods: {
-        test() {
-            apitest().then(res => {
+        getHotGoods(params) {
+            apiGetHotGoods({
+                ...params
+            }).then(res => {
                 console.log(res)
             }).catch(err => {
                 console.log(err)
+            })
+        },
+        getAllGoods() {
+            apiGetAllGoods().then(res => {
+                console.log(res)
             })
         }
     }

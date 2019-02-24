@@ -29,5 +29,12 @@ export const apiDeleteAdminUser = (params) => { return post('/api/admin/deleteAd
 // 用户管理 ==> 设置用户为无效状态
 export const apiGetGoods = (params) => { return get('/api/admin/getGoods', params) }
 
+/* ========================================= app =================================================== */
+
+// 获取全部热门商品
+export const apiGetHotGoods = (params) => { return get('/api/app/getHotGoods', params) }
+// 获取全部商品
+export const apiGetAllGoods = (params) => { return get('/api/app/getAllGoods', params) }
+
 // 登陆
 export const apitest = (params) => { return get('/api/shop/getAll', params) }
