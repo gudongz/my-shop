@@ -18,7 +18,8 @@
 
 <script>
 import { apiLogin } from '@/api/index.js'
-import { $message } from '@/utils/util'
+import { $message, changeTree } from '@/utils/util'
+import { mapActions } from 'vuex'
 
 export default {
     props: {
@@ -46,26 +47,29 @@ export default {
         }
     },
     methods: {
+        ...mapActions('siderMenu', [
+            'setMenu'
+        ]),
         handleSubmit2(ev) {
-            var _this = this
-            _this.$refs.ruleForm2.validate((valid) => {
+            this.$refs.ruleForm2.validate((valid) => {
                 if (valid) {
-                    _this.logining = true
+                    this.logining = true
                     apiLogin({
                         phone: this.ruleForm2.account,
                         password: this.ruleForm2.checkPass
                     }).then(res => {
                         $message(res.code, res.message)
-                        if (res.code === '00000') {
+                        if (res.code === '00000' || res.code === '00001') {
                             sessionStorage.setItem('adminUserInfo', JSON.stringify(res.data))
-                            _this.logining = false
-                            _this.$router.push({ path: '/admin/index' })
+                            this.setMenu(changeTree(res.data.power || []))
+                            this.logining = false
+                            this.$router.push({ path: '/admin/index' })
                         } else {
-                            _this.logining = false
+                            this.logining = false
                         }
                     }).catch(error => {
                         if (error) {
-                            _this.logining = false
+                            this.logining = false
                         }
                     })
                 } else {

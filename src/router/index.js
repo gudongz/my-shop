@@ -45,14 +45,6 @@ export default new Router({
 
             ]
         },
-        {
-            path: '',
-            component: Home,
-            name: '管理中心',
-            children: [
-                // { path: '/power', name: '权限管理', component: Power },
-            ]
-        },
 
         // 客户端
         {

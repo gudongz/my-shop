@@ -5,34 +5,52 @@
             :router="true"
             :default-active="$route.path"
         >
-            <el-menu-item index="/admin/index">
-                <i class="el-icon-menu"></i>
-                <span slot="title">首页</span>
-            </el-menu-item>
-            <el-menu-item index="/admin/shop">
-                <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
-            </el-menu-item>
-            <el-menu-item index="/admin/user">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
-            </el-menu-item>
-            <el-submenu index="1">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>系统管理</span>
+            <template v-for="item in menu[0].children">
+                <template v-if="item.children">
+                    <el-submenu :index="item.url" v-if="item.checked" :key="item.id">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>{{item.name}}</span>
+                        </template>
+                        <template v-for="i in item.children">
+                            <el-menu-item :index="i.url" v-if="i.checked" :key="i.id">
+                                <i class="el-icon-menu"></i>
+                                <span slot="title">{{i.name}}</span>
+                            </el-menu-item>
+                        </template>
+                    </el-submenu>
                 </template>
-                <el-menu-item index="/admin/role"><i class="el-icon-setting"></i>角色管理</el-menu-item>
-                <el-menu-item index="/admin/power"><i class="el-icon-setting"></i>权限管理</el-menu-item>
-                <el-menu-item index="/admin/adminUser"><i class="el-icon-setting"></i>用户管理</el-menu-item>
-            </el-submenu>
+                <template v-else>
+                    <el-menu-item :index="item.url" v-if="item.checked" :key="item.id">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">{{item.name}}</span>
+                    </el-menu-item>
+                </template>
+            </template>
         </el-menu>
     </el-aside>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+import { changeTree } from '@/utils/util'
+
 export default {
-    name: 'AdminSider'
+    name: 'AdminSider',
+    computed: mapState({
+        menu: function(state) {
+            if (state.siderMenu.menu.length === 0) {
+                let userInfo = JSON.parse(sessionStorage.getItem('adminUserInfo'))
+                this.setMenu(changeTree(userInfo.power || []))
+            }
+            return state.siderMenu.menu
+        }
+    }),
+    methods: {
+        ...mapActions('siderMenu', [
+            'setMenu'
+        ])
+    }
 }
 </script>
 

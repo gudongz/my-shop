@@ -4,10 +4,10 @@
         <div class="header-group clearnFloat">
             <el-row :gutter="20">
                 <el-col :xl="2" :lg="2" :md="2" :sm="4">
-                    <el-button type="primary" size="mini">添加</el-button>
+                    <el-button type="primary" size="mini" @click="handleAddGoods">添加</el-button>
                 </el-col>
                 <el-col :xl="22" :lg="22" :md="22" :sm="20">
-                    <el-form :model="searchForm" class="form" size="mini" :inline="true">
+                    <el-form class="form" size="mini" :inline="true">
                         <el-form-item label="类型：">
                             <el-select v-model="search" placeholder="请选择">
                                 <el-option label="全部" value="0"></el-option>
@@ -21,9 +21,10 @@
             </el-row>
         </div>
         <div class="container">
-            <common-table :deploy="deploy" :table-data="tableData"></common-table>
+            <common-table :deploy="deploy" :table-data="tableData" @tableHandle="handle"></common-table>
             <pagination :pageData="pageData" @pageChange="pageChange"></pagination>
         </div>
+        <edit-form :editFormData="editFormData"></edit-form>
     </div>
 </template>
 
@@ -31,10 +32,11 @@
 import BreadCrumb from '../../components/base-breadcrumb'
 import Pagination from '../../components/base-pagination'
 import CommonTable from '../components/common-table'
+import EditForm from './components/EditForm'
 import { apiGetGoods } from '@/api/index'
 export default {
     name: 'ShopManage',
-    components: { BreadCrumb, Pagination, CommonTable },
+    components: { BreadCrumb, Pagination, CommonTable, EditForm },
     data() {
         return {
             breadcrumbList: ['商品管理'],
@@ -52,6 +54,10 @@ export default {
             },
             tableData: [],
             search: '0',
+            editFormData: {
+                isShow: false,
+                data: {}
+            },
             pageData: {
                 pageIndex: 1,
                 pageSize: 10,
@@ -66,6 +72,24 @@ export default {
         handleSearch() {
             this.getGoods(this.search)
         },
+        handleAddGoods() {
+            this.editFormData = {
+                isShow: true,
+                data: {
+                    name: '',
+                    color: '',
+                    size: '',
+                    brand: '',
+                    price: '',
+                    store: '',
+                    classify: '',
+                    hot: '',
+                    message: '',
+                    messagePicture: '',
+                    viewPicture: ''
+                }
+            }
+        },
         getGoods(type = '') {
             apiGetGoods({
                 type
@@ -73,6 +97,19 @@ export default {
                 this.pageData.pageCount = res.result.total
                 this.dealData(res.result.data || [])
             })
+        },
+        handle(data) {
+            // 0 编辑 ， 1 删除
+            let mapHandle = {
+                0: () => {
+                    this.editFormData = {
+                        isShow: true,
+                        data: data.data
+                    }
+                },
+                1: () => {}
+            }
+            mapHandle[data.type]()
         },
         dealData(data) {
             let obj = [...data]
