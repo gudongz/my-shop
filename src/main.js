@@ -23,12 +23,16 @@ router.beforeEach((to, from, next) => {
         sessionStorage.removeItem('adminUserInfo')
     }
     let user = JSON.parse(sessionStorage.getItem('adminUserInfo'))
-    if (!user && to.path !== '/admin/login') {
-        next({
-            path: '/admin/login'
-        })
-    } else {
+    if (to.path.indexOf('app') > -1) {
         next()
+    } else {
+        if (!user && to.path !== '/admin/login') {
+            next({
+                path: '/admin/login'
+            })
+        } else {
+            next()
+        }
     }
 })
 

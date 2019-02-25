@@ -28,6 +28,23 @@ Vue.use(Router)
 export default new Router({
     mode: 'history',
     routes: [
+        // 客户端
+        {
+            path: '/app',
+            name: '客户端',
+            component: ClientHome,
+            children: [
+                { path: '/app/index', name: '客户端首页', component: ClientIndex },
+                { path: '/app/classify', name: '分类', component: Classify },
+                { path: '/app/shopCar', name: '购物车', component: ShopCar },
+                { path: '/app/myCenter', name: '个人中心', component: MyCenter }
+            ]
+        },
+        { path: '/app/search', name: '搜索', component: Search },
+        { path: '/app/searchResult', name: '搜索结果', component: SearchResult },
+        { path: '/app/login', name: '客户端登陆', component: ClientLogin },
+        { path: '/app/shopDetail', name: '商品详情', component: ShopDetail },
+
         // 管理
         { path: '/admin/login', name: '管理登陆界面', component: Login },
         {
@@ -44,23 +61,6 @@ export default new Router({
                 { path: '/admin/orders', name: '订单管理', component: OrdersManage }
 
             ]
-        },
-
-        // 客户端
-        {
-            path: '/app',
-            name: '客户端',
-            component: ClientHome,
-            children: [
-                { path: '/app/index', name: '客户端首页', component: ClientIndex },
-                { path: '/app/classify', name: '分类', component: Classify },
-                { path: '/app/shopCar', name: '购物车', component: ShopCar },
-                { path: '/app/myCenter', name: '个人中心', component: MyCenter }
-            ]
-        },
-        { path: '/app/search', name: '搜索', component: Search },
-        { path: '/app/searchResult', name: '搜索结果', component: SearchResult },
-        { path: '/app/login', name: '客户端登陆', component: ClientLogin },
-        { path: '/app/shopDetail', name: '商品详情', component: ShopDetail }
+        }
     ]
 })

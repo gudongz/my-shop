@@ -22,19 +22,17 @@ let JsonWrite = function(res, ret) {
 router.get('/getHotGoods', (req, res) => {
     let sql = $sql.app.getHotGoods
     let params = req.query
-    mysql.connect(sql, [params.hot], (result) => {
-        if (result) {
-            JsonWrite(res, result)
-        }
+    mysql.connect(sql, [params.hot]).then(result => {
+        JsonWrite(res, result)
     })
 })
 
-router.get('/getAllGoods', (req, res) => {
-    let sql = $sql.app.getAllGoods
-    mysql.connect(sql, false, (result) => {
-        if (result) {
-            JsonWrite(res, result)
-        }
-    })
-})
+// router.get('/getAllGoods', (req, res) => {
+//     let sql = $sql.app.getAllGoods
+//     mysql.connect(sql, false, (result) => {
+//         if (result) {
+//             JsonWrite(res, result)
+//         }
+//     })
+// })
 module.exports = router
