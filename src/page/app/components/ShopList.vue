@@ -1,14 +1,16 @@
 <template>
-    <div>
+    <div class="item-box">
         <flexbox class="item" :gutter="0"  wrap="wrap" justify="space-between">
-            <flexbox-item :span="6" v-for="(item, index) in obj.listData" :key="item.id">
-                <div :class="{'item': true, 'item-padding-right': index % 2 === 0, 'item-padding-left': index % 2 !== 0}">
+            <flexbox-item :span="6" v-for="(item, index) in shopList" :key="item.id">
+                <div :class="{'item': true, 'item-padding-right': index % 2 === 0, 'item-padding-left': index % 2 !== 0}"
+                    @click="goToGoodsDetail(item.id)"
+                >
                     <div class="img-box">
-                        <img :src="item.url" alt="">
+                        <img :src="item.view_picture[0].url" alt="">
                     </div>
                     <div class="conent">
-                        <p class="title">{{item.title}}</p>
-                        <p class="msg">{{item.msg}}</p>
+                        <p class="title">{{item.name}}</p>
+                        <p class="msg">{{item.message}}</p>
                         <p class="price">￥{{item.price}}</p>
                     </div>
                 </div>
@@ -22,29 +24,26 @@ import { Flexbox, FlexboxItem } from 'vux'
 export default {
     name: 'ShopList',
     components: { Flexbox, FlexboxItem },
+    props: {
+        shopList: Array
+    },
     data() {
         return {
-            obj: {
-                id: 111,
-                title: '每日精选',
-                headerItem: { id: 22, url: '//i8.mifile.cn/v1/a1/9c787c02-4ebc-020b-7c9b-2dc681471981!720x280.webp' },
-                listData: [
-                    { id: 0, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' },
-                    { id: 1, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' },
-                    { id: 2, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' },
-                    { id: 3, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' },
-                    { id: 4, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' },
-                    { id: 5, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' },
-                    { id: 6, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' },
-                    { id: 7, title: '小米青春版', msg: '潮流镜面渐变色，自拍旗舰', price: '1456', url: '//i8.mifile.cn/v1/a1/1c3e0097-73a6-1788-96f7-2cdb58d82ba1!360x360.webp' }
-                ]
-            }
+        }
+    },
+    methods: {
+        goToGoodsDetail(params) {
+            console.log(11)
+            this.$router.push({ path: '/app/shopDetail', query: { id: params } })
         }
     }
 }
 </script>
 
 <style lang="less" scoped>
+.item-box /deep/ .vux-flexbox {
+    align-items: flex-start;
+}
 .item {
     box-sizing: border-box;
     width: 100%;
@@ -59,11 +58,20 @@ export default {
         padding: .4rem .8rem;
         .title {
             font-size: .9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .msg {
+            height: 1.9rem;
             margin-top: .2rem;
             font-size: .7rem;
+            line-height: .9rem;
             color: rgba(0,0,0,.54);
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
         }
         .price {
             margin-top: .2rem;

@@ -1,14 +1,17 @@
 <template>
     <div class="section">
-        <h3 class="shop-name">红米Note7</h3>
-        <p class="shop-message">4800万拍照千元机 / 品质“小金刚”，18个月超长质保 / “满血版”骁龙660处理器 / 4000mAh 大电量 / 6.3" 水滴全面屏 / USB-C 接口，方便耐用 / 支持快充 4 协议</p>
-        <div class="price">￥999</div>
+        <h3 class="shop-name">{{shopTitle.name}}</h3>
+        <p class="shop-message">{{shopTitle.message}}</p>
+        <div class="price">￥{{shopTitle.price}}</div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'ShopTitle'
+    name: 'ShopTitle',
+    props: {
+        shopTitle: Object
+    }
 }
 </script>
 

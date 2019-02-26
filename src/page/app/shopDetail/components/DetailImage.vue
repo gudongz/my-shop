@@ -1,7 +1,7 @@
 <template>
     <div class="img-box">
         <div class="title">图片介绍</div>
-        <img v-for="item of imgList" :key="item.id" :src="item.img" alt="img">
+        <img v-for="item of imgList" :key="item.id" :src="item.url" alt="img">
     </div>
 </template>
 

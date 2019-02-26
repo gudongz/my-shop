@@ -15,7 +15,7 @@
         </grid>
         <div class="container">
             <activity></activity>
-            <item></item>
+            <item :shop-list="shopList"></item>
         </div>
     </div>
 </template>
@@ -26,7 +26,7 @@ import Activity from './components/Activity'
 import Item from './components/Item'
 import { Swiper, Grid, GridItem } from 'vux'
 
-import { apiGetHotGoods, apiGetAllGoods } from '@/api/index'
+import { apiGetHotGoods } from '@/api/index'
 
 export default {
     name: 'ClientIndex',
@@ -54,12 +54,13 @@ export default {
                 { label: '电视热卖', icon: 'icon-diannao', link: '' },
                 { label: '闪购', icon: 'icon-shangcheng', link: '' },
                 { label: '全部', icon: 'icon-hpncircle', link: '' }
-            ]
+            ],
+            shopList: []
         }
     },
     mounted() {
         this.getHotGoods({ hot: 1 })
-        this.getAllGoods()
+        // this.getAllGoods()
     },
     methods: {
         getHotGoods(params) {
@@ -67,15 +68,14 @@ export default {
                 ...params
             }).then(res => {
                 console.log(res)
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        getAllGoods() {
-            apiGetAllGoods().then(res => {
-                console.log(res)
+                this.shopList = res.result || []
             })
         }
+        // getAllGoods() {
+        //     apiGetAllGoods().then(res => {
+        //         console.log(res)
+        //     })
+        // }
     }
 }
 </script>
