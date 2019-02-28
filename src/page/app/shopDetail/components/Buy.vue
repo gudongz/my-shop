@@ -4,13 +4,18 @@
             <div><i class="iconfont icon-gouwuche"></i><span class="car-num">1</span></div>
             <div>购物车</div>
         </div>
-        <div class="add-car">加入购物车</div>
+        <div class="add-car" @click="buy">加入购物车</div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'buy'
+    name: 'buy',
+    methods: {
+        buy() {
+            this.$emit('buy')
+        }
+    }
 }
 </script>
 

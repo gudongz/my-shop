@@ -3,13 +3,14 @@
         <detail-header></detail-header>
         <swiper class="swiper" :list="imgList" height="400px"></swiper>
         <shop-tilte :shop-title="shopInfo"></shop-tilte>
-        <div class="choose">
+        <div class="choose" @click="chooseShop">
             <span>已选</span>
             <p>红米Note7 全网通 6+64 亮黑色 x 1</p>
             <i class="iconfont icon-houtui"></i>
         </div>
         <detail-image :img-list="shopInfo.message_picture"></detail-image>
-        <buy></buy>
+        <buy @buy="chooseShop"></buy>
+        <choose v-if="shopIsShow" :shop-info="shopInfo" @closeChoose="closeChoose"></choose>
     </div>
 </template>
 
@@ -18,6 +19,7 @@ import DetailHeader from './components/DetailHeader'
 import DetailImage from './components/DetailImage'
 import ShopTilte from './components/ShopTitle'
 import Buy from './components/Buy'
+import Choose from './components/Choose'
 import { Swiper } from 'vux'
 
 import { apiGetGoodsById } from '@/api/index'
@@ -29,21 +31,15 @@ export default {
         Swiper,
         ShopTilte,
         DetailImage,
-        Buy
+        Buy,
+        Choose
     },
     data () {
         return {
             shopId: '',
             shopInfo: {},
-            imgList: [
-                // {
-                //     url: 'javascript:',
-                //     img: '//i8.mifile.cn/v1/a1/f1dae8da-2d69-af58-42f4-d92c21b39f9a!720x360.webp'
-                // }, {
-                //     url: 'javascript:',
-                //     img: '//i8.mifile.cn/v1/a1/a94721ff-66f8-0bba-0190-f17ff896b26c!720x360.webp'
-                // }
-            ]
+            imgList: [],
+            shopIsShow: false
         }
     },
     mounted() {
@@ -54,6 +50,7 @@ export default {
     methods: {
         getGoodsById(params) {
             apiGetGoodsById({ ...params }).then(res => {
+                console.log(res)
                 this.dealData(res.result[0].view_picture)
                 this.shopInfo = res.result[0] || []
             })
@@ -65,7 +62,12 @@ export default {
                     img: item.url
                 }
             })
-            console.log(this.imgList)
+        },
+        chooseShop() {
+            this.shopIsShow = true
+        },
+        closeChoose() {
+            this.shopIsShow = false
         }
     }
 
