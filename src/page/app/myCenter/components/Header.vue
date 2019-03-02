@@ -1,15 +1,22 @@
 <template>
     <div class="header">
-        <div class="user" @click="goLogin">
+        <div class="user">
             <img src="../../../../assets/people.png" alt="用户">
         </div>
-        <div class="login" @click="goLogin">登陆/注册</div>
+        <div v-if="!userInfo.id" class="login" @click="goLogin">登陆/注册</div>
+        <div v-if="!!userInfo.id" class="login">{{userInfo.name}}</div>
     </div>
 </template>
 
 <script>
 export default {
     name: 'CenterHeader',
+    props: {
+        userInfo: {
+            type: Object,
+            default: () => {}
+        }
+    },
     methods: {
         goLogin() {
             this.$router.push('/app/login')
@@ -20,7 +27,6 @@ export default {
 
 <style lang="less" scoped>
 .header {
-    margin-top: 46px;
     display: flex;
     justify-content: start;
     align-items: center;

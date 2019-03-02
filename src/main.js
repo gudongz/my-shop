@@ -12,6 +12,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import echarts from 'echarts'
 import store from './store/store.js'
+import { LoadingPlugin, ToastPlugin, ConfirmPlugin } from 'vux'
+
+Vue.use(ConfirmPlugin)
+Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
 
 Vue.use(ElementUI)
 Vue.use(Vuex)

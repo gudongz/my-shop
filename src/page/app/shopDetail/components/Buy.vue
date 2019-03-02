@@ -1,7 +1,7 @@
 <template>
     <div class="buy">
         <div class="car">
-            <div><i class="iconfont icon-gouwuche"></i><span class="car-num">1</span></div>
+            <div><i class="iconfont icon-gouwuche"></i><span v-if="shopCarNum !== 0" class="car-num">{{shopCarNum}}</span></div>
             <div>购物车</div>
         </div>
         <div class="add-car" @click="buy">加入购物车</div>
@@ -11,6 +11,16 @@
 <script>
 export default {
     name: 'buy',
+    computed: {
+        shopCarNum() {
+            let shopCarInfo = this.$store.getters['shopCar/getShopCar']
+            let sum = 0
+            shopCarInfo.forEach(item => {
+                sum += item.num
+            })
+            return sum
+        }
+    },
     methods: {
         buy() {
             this.$emit('buy')

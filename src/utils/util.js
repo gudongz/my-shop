@@ -33,3 +33,22 @@ export function changeTree(arr) {
     })
     return [...targetData]
 }
+// 获取当前日期 2019030312123
+export function getDate() {
+    let date = new Date()
+    let year = date.getFullYear()
+    let day = date.getDate()
+    let month = date.getMonth()
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+    let seconds = date.getSeconds()
+    let milliseconds = date.getMilliseconds()
+    return `${year}-${filterTime(day)}-${filterTime(month)}-${filterTime(hours)}-${filterTime(minutes)}-${filterTime(seconds)}-${filterTime(milliseconds)}`
+}
+function filterTime(val) {
+    if (val < 10) {
+        return `0${val}`
+    } else {
+        return val
+    }
+}

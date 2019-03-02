@@ -1,6 +1,6 @@
 <template>
     <div class="center-main">
-        <center-header></center-header>
+        <center-header :user-info="userInfo"></center-header>
         <center-list></center-list>
         <div class="line"></div>
         <center-item></center-item>
@@ -17,6 +17,11 @@ export default {
         CenterHeader,
         CenterList,
         CenterItem
+    },
+    computed: {
+        userInfo() {
+            return this.$store.getters['userInfo/getAppUserInfo']
+        }
     }
 }
 </script>

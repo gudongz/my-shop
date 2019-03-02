@@ -1,22 +1,22 @@
 <template>
     <div>
         <ul>
-            <li class="item">
-                <check-icon></check-icon>
+            <li class="item" v-for="item in shopCarInfo" :key="item.id">
+                <check-icon :value.sync="item.checked"></check-icon>
                 <div class="img-box">
-                    <img src="//i1.mifile.cn/a1/pms_1521442676.48017520!180x1800.jpg" alt="">
+                    <img :src="item.shopInfo.view_picture[0].url" alt="图片">
                 </div>
                 <div class="item-content">
-                    <p class="item-title">小米Micro数据线 编织线版  （100cm） 黑色</p>
-                    <em class="item-price">售价：19.9元</em>
+                    <p class="item-title">{{item.shopInfo.name}} {{item.shopInfo.size}} {{item.shopInfo.color}}</p>
+                    <em class="item-price">售价：{{item.shopInfo.price}}元</em>
                     <div class="number-group">
-                        <x-number align="left" :min="0"></x-number>
-                        <i class="iconfont icon-shezhi"></i>
+                        <x-number align="left" v-model="item.num" :min="1"></x-number>
+                        <i class="iconfont icon-shezhi" @click="deleteShop(item.id)"></i>
                     </div>
                 </div>
             </li>
         </ul>
-        <div class="noShop">
+        <div class="noShop" v-if="!shopCarInfo.length">
             <i class="iconfont icon-gouwuche icon"></i>
             <span class="msg">购物车还是空的</span>
             <router-link
@@ -31,11 +31,34 @@
 
 <script>
 import { CheckIcon, XNumber } from 'vux'
+import { mapActions } from 'vuex'
 export default {
     name: 'InCar',
+    props: {
+        shopCarInfo: {
+            type: Array,
+            default: () => []
+        }
+    },
     components: {
         CheckIcon,
         XNumber
+    },
+    methods: {
+        ...mapActions('shopCar', [
+            'deleShopCarByIdAction'
+        ]),
+        deleteShop(id) {
+            const _this = this
+            this.$vux.confirm.show({
+                title: '提示',
+                content: '确定要删除该商品？',
+                onConfirm () {
+                    _this.deleShopCarByIdAction(id)
+                    console.log(id)
+                }
+            })
+        }
     }
 }
 </script>

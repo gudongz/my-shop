@@ -20,7 +20,8 @@ export default {
     watch: {
         '$route': {
             handler(params) {
-                if (params.path === '/index' || params.path === '/myCenter') {
+                console.log(params)
+                if (params.path === '/app/index' || params.path === '/app/myCenter') {
                     this.headerShow = false
                 } else {
                     this.headerShow = true

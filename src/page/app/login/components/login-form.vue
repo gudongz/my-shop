@@ -3,19 +3,19 @@
         <h4 class="title">{{title}}</h4>
         <div class="input-group">
             <group>
-                <x-input type="text" placeholder="账号"></x-input>
+                <x-input type="text" v-model="form.phone" placeholder="账号"></x-input>
             </group>
             <group>
-                <x-input :type="isPassWordShow" placeholder="密码">
+                <x-input :type="isPassWordShow" v-model="form.password" placeholder="密码">
                     <i :class="[isPassWordShow === 'password' ? 'iconfont icon-biyan' : 'iconfont icon-zhengyan1']" slot="right" @click="togglePassWordShow"></i>
                 </x-input>
             </group>
             <group v-if="!!loginOrRegister">
-                <x-input :type="isPassWordShow" placeholder="确认密码"></x-input>
+                <x-input :type="isPassWordShow" v-model="form.confirmPassword" placeholder="确认密码"></x-input>
             </group>
         </div>
         <div class="btn-group">
-            <x-button :gradients="['#FF5E3A', '#FF9500']">{{btnOneText}}</x-button>
+            <x-button :gradients="['#FF5E3A', '#FF9500']" @click.native="login">{{btnOneText}}</x-button>
             <x-button @click.native="toggleLoginRegister">{{btnTwoText}}</x-button>
         </div>
     </div>
@@ -27,6 +27,9 @@ import {
     Group,
     XButton
 } from 'vux'
+import { apiAppLogin, apiAppRegister } from '@/api/index'
+import { mapActions } from 'vuex'
+
 export default {
     name: 'LoginForm',
     components: {
@@ -36,6 +39,11 @@ export default {
     },
     data() {
         return {
+            form: {
+                phone: '',
+                password: '',
+                confirmPassword: ''
+            },
             isPassWordShow: 'password',
             loginOrRegister: 0, // 0 登陆， 1 注册
             title: '账号登陆',
@@ -44,6 +52,51 @@ export default {
         }
     },
     methods: {
+        ...mapActions('userInfo', [
+            'changeAppUserInfo'
+        ]),
+        login() {
+            if (!this.form.phone) {
+                this.$vux.toast.text('请输入账号', 'top')
+                return
+            }
+            if (!this.form.password) {
+                this.$vux.toast.text('请输入密码', 'top')
+                return
+            }
+            this.$vux.loading.show({
+                text: '加载中....'
+            })
+            if (this.loginOrRegister === 0) {
+                apiAppLogin({
+                    phone: this.form.phone,
+                    password: this.form.password
+                }).then(res => {
+                    this.$vux.loading.hide()
+                    if (res.result[0].id) {
+                        localStorage.setItem('locaAppUserInfo', JSON.stringify(res.result[0]))
+                        this.changeAppUserInfo(res.result[0])
+                        this.$router.go(-1)
+                    }
+                })
+            } else {
+                if (this.form.password !== this.form.confirmPassword) {
+                    this.$vux.toast.text('两次密码输入不一致', 'top')
+                } else {
+                    apiAppRegister({
+                        phone: this.form.phone,
+                        password: this.form.password
+                    }).then(res => {
+                        this.$vux.loading.hide()
+                        if (res.result[0].id) {
+                            localStorage.setItem('locaAppUserInfo', JSON.stringify(res.result[0]))
+                            this.changeAppUserInfo(res.result[0])
+                            this.$router.go(-1)
+                        }
+                    })
+                }
+            }
+        },
         toggleLoginRegister() {
             this.loginOrRegister = !this.loginOrRegister
                 ? 1

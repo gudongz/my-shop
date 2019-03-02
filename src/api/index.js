@@ -29,7 +29,7 @@ export const apiDeleteAdminUser = (params) => { return post('/api/admin/deleteAd
 // 用户管理 ==> 设置用户为无效状态
 export const apiGetGoods = (params) => { return get('/api/admin/getGoods', params) }
 
-/* ========================================= app =================================================== */
+/* ========================================= app端 =================================================== */
 
 // 获取全部热门商品
 export const apiGetHotGoods = (params) => { return get('/api/app/getHotGoods', params) }
@@ -37,6 +37,9 @@ export const apiGetHotGoods = (params) => { return get('/api/app/getHotGoods', p
 export const apiGetAllGoods = (params) => { return get('/api/app/getAllGoods', params) }
 // 根据 id 查询商品
 export const apiGetGoodsById = (params) => { return get('/api/app/getGoodsById', params) }
-
+// 用户登陆
+export const apiAppLogin = (params) => { return post('/api/app/login', params) }
+// 用户注册
+export const apiAppRegister = (params) => { return post('/api/app/register', params) }
 // 登陆
 export const apitest = (params) => { return get('/api/shop/getAll', params) }

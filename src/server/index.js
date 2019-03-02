@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
-// const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 let routes = require('./api/index')
 
-// app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({ expanded: false }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ expanded: false }))
 
 routes(app)
 

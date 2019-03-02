@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { InlineXNumber } from 'vux'
 export default {
     name: 'Choose',
@@ -48,8 +49,24 @@ export default {
         console.log(this.shopInfo)
     },
     methods: {
+        ...mapActions('shopCar', [
+            'addShopCarAction'
+        ]),
         addShopCar() {
-            console.log(111)
+            this.addShopCarAction({
+                id: this.shopInfo.id,
+                num: this.buyNum,
+                checked: true,
+                shopInfo: this.shopInfo
+            })
+            this.$vux.loading.show({
+                text: 'Loading'
+            })
+            setTimeout(() => {
+                this.$vux.loading.hide()
+                this.closeShopChoose()
+                this.$vux.toast.text('成功加入购物车！', 'middle')
+            }, 1000)
         },
         closeShopChoose() {
             this.$emit('closeChoose')

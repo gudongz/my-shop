@@ -7,7 +7,10 @@ const sqlMap = {
         getAllGoods: 'SELECT * FROM goods',
         getGoodsViewPicture: 'SELECT * FROM view_picture WHERE goods_id = ?',
         getGoodsMessagePicture: 'SELECT * FROM message_picture WHERE goods_id = ?',
-        getGoodsById: 'select * from goods where id = ?'
+        getGoodsById: 'select * from goods where id = ?',
+        login: 'select * from app_user where phone = ?',
+        register: 'insert into app_user (name, phone, password) value (?, ?, ?)',
+        getUserInfo: 'select * from app_user where id = ?'
     }
 }
 
