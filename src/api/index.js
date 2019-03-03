@@ -41,5 +41,9 @@ export const apiGetGoodsById = (params) => { return get('/api/app/getGoodsById',
 export const apiAppLogin = (params) => { return post('/api/app/login', params) }
 // 用户注册
 export const apiAppRegister = (params) => { return post('/api/app/register', params) }
-// 登陆
+// 提交订单
+export const apiAddOrder = (params) => { return post('/api/app/addOrder', params) }
+// 获取该用户订单
+export const apiGetUserOrder = (params) => { return get('/api/app/getUserOrder', params) }
+// 登陆 测试 ？？？？
 export const apitest = (params) => { return get('/api/shop/getAll', params) }

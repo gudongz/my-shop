@@ -84,4 +84,52 @@ router.post('/register', async (req, res) => {
         JsonWrite(res, '该账户已存在')
     }
 })
+// app端 提交订单
+router.post('/addOrder', async (req, res) => {
+    let sql = $sql.app.addOrder
+    let params = req.body
+    // 插入到order表
+    let result = await mysql.connect(sql, [params.userId, params.orderNumber, params.goodsInfo, params.status, params.money, params.num, params.address, params.name, params.phone, params.createTime, params.changeTime])
+    for (let i in params.goodsInfo) {
+        await mysql.connect('update `goods` set `store` = `store` - ? where id = ?', [params.goodsInfo[i].num, params.goodsInfo[i].id])
+    }
+    if (result) {
+        // 查询该用户是否已有订单，
+        let haveOrder = await mysql.connect('select `order` from app_user where id = ?', [params.userId])
+        let strOrder
+        if (haveOrder[0].order === null) {
+            strOrder = `${result.insertId}`
+        } else {
+            strOrder = `${haveOrder[0].order},${result.insertId}`
+        }
+        // 更改该用户已有的订单
+        let updateUserOrderInfo = await mysql.connect('update `app_user` set `order` = ? where id = ?', [strOrder, params.userId])
+
+        JsonWrite(res, updateUserOrderInfo)
+    } else {
+        JsonWrite(res, '插入失败')
+    }
+})
+// app 端 获取用户订单
+router.get('/getUserOrder', async (req, res) => {
+    let params = req.query
+    // let result = await mysql.connect('select * from `order` where `user_id` = ? and `status` = ?', [params.userId, params.type])
+    let result = await mysql.connect('select * from `order` where `user_id` = ?', [params.userId])
+    if (result[0]) {
+        for (let i in result) {
+            let arr = JSON.parse(result[i].goods_info)
+            for (let j in arr) {
+                let shopMsg = await mysql.connect('select * from `goods` where `id` = ?', [arr[j].id])
+                arr[j].shop = shopMsg[0]
+
+                arr[j].shop.view_picture = await mysql.connect(SQLgetGoodsViewPicture, [arr[j].id])
+                arr[j].shop.message_picture = await mysql.connect(SQLgetGoodsMessagePicture, [arr[j].id])
+                result[i].goods_info = arr
+            }
+        }
+        JsonWrite(res, result)
+    } else {
+        JsonWrite(res, '暂无订单')
+    }
+})
 module.exports = router

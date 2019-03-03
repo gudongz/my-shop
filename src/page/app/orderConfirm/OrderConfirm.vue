@@ -37,6 +37,7 @@
 import CommonHeader from '../components/common_header'
 import { XInput, Group, XAddress, ChinaAddressV4Data } from 'vux'
 import { getDate } from '@/utils/util'
+import { apiAddOrder } from '@/api/index'
 export default {
     name: 'OrderConfirm',
     components: {
@@ -88,6 +89,21 @@ export default {
     },
     methods: {
         goPay() {
+            if (this.addressOne.length === 0 || this.addressTwo === '') {
+                this.$vux.toast.text('请填写收货地址', 'top')
+                return
+            }
+            if (this.name === '') {
+                this.$vux.toast.text('请填写收货人姓名', 'top')
+                return
+            }
+            if (this.phone === '') {
+                this.$vux.toast.text('请填写收货人手机号', 'top')
+                return
+            }
+            this.$vux.loading.show({
+                text: '加载中...'
+            })
             let goodsInfo = []
             let shop = this.shopCarInfo.map(item => {
                 if (item.checked) {
@@ -105,17 +121,26 @@ export default {
 
             let obj = {
                 userId: this.userInfo.id, // 用户id
-                order_number: `${this.userInfo.id}${strDate}`, // 订单编号
-                goodsInfo, // 商品信息
+                orderNumber: `${this.userInfo.id}${strDate}`, // 订单编号
+                // goodsInfo: JSON.stringify(goodsInfo), // 商品信息
+                goodsInfo,
                 status: 1, // 订单状态，1 = 已支付
                 money: this.sumMoney, // 总订单
                 num: this.shopCarNum, // 总数量
-                address: `${this.addressOne}-${this.addressTwo}`, // 收货地址
+                address: `${this.addressOne},${this.addressTwo}`, // 收货地址
                 name: this.name, // 收件人
                 phone: this.phone, // 收件人手机号
-                createTime: date // 订单创建日期
+                createTime: date, // 订单创建日期
+                changeTime: date // 订单变更日期
             }
-            console.log(obj)
+            apiAddOrder({
+                ...obj
+            }).then(res => {
+                if (res.code === '00000') {
+                    this.$vux.loading.hide()
+                    this.$router.push({ path: '/app/myOrder' })
+                }
+            })
         }
     }
 }

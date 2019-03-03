@@ -23,6 +23,7 @@ import Search from '@/page/app/search/search'
 import SearchResult from '@/page/app/searchResult/searchResult'
 import ShopDetail from '@/page/app/shopDetail/detail'
 import OrderConfirm from '@/page/app/orderConfirm/orderConfirm'
+import MyOrder from '@/page/app/myOrder/myOrder'
 
 Vue.use(Router)
 
@@ -46,6 +47,7 @@ export default new Router({
         { path: '/app/login', name: '客户端登陆', component: ClientLogin },
         { path: '/app/shopDetail', name: '商品详情', component: ShopDetail },
         { path: '/app/orderConfirm', name: '用户结算', component: OrderConfirm },
+        { path: '/app/myOrder', name: '我的订单', component: MyOrder },
 
         // 管理
         { path: '/admin/login', name: '管理登陆界面', component: Login },

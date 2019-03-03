@@ -24,10 +24,7 @@ export default {
     data() {
         return {
             list: [
-                { title: '我的订单', icon: 'icon-wuxupailie', link: '' },
-                { title: '订单', icon: 'icon-wuxupailie', link: '' },
-                { title: '的订单', icon: 'icon-wuxupailie', link: '' },
-                { title: '我的单', icon: 'icon-wuxupailie', link: '' }
+                { title: '我的订单', icon: 'icon-wuxupailie', link: '/app/myOrder' }
             ]
         }
     }
