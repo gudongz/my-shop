@@ -13,7 +13,7 @@
             </ul>
         </div>
         <div class="right" ref="right">
-            <ul>
+            <ul class="right-ul">
                 <li v-for="(item, index) in right"
                     :key="index"
                     class="right-item right-item-hook"
@@ -31,6 +31,8 @@
 <script>
 import BetterScroll from 'better-scroll'
 import ConItem from './components/con-item'
+import { apiGetHotGoods } from '@/api/index'
+
 export default {
     name: 'Classify',
     components: {
@@ -41,58 +43,12 @@ export default {
             left: ['手机', '电脑'],
             right: [
                 {
-                    titleid: '0',
-                    img: '//i8.mifile.cn/v1/a1/7f76151f-0f4e-c398-ad4b-5ce8d2e17369!500x200.webp',
-                    title: '新品',
-                    children: [
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        }
-                    ]
+                    title: '手机',
+                    children: []
                 },
                 {
-                    titleid: '1',
-                    img: '//i8.mifile.cn/v1/a1/7f76151f-0f4e-c398-ad4b-5ce8d2e17369!500x200.webp',
-                    title: '众筹',
-                    children: [
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        },
-                        {
-                            id: '0',
-                            img: '//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/23a250dfaba87009c28a627d3a292c76.png?thumb=1&w=120&h=120',
-                            name: '红米Note 7'
-                        }
-                    ]
+                    title: '电脑',
+                    children: []
                 }
             ],
             listHeight: [],
@@ -105,8 +61,17 @@ export default {
             this._initScroll()
             this._getHeight()
         })
+        this.getHotGoods({ hot: 1 })
     },
     methods: {
+        getHotGoods(params) {
+            apiGetHotGoods({
+                ...params
+            }).then(res => {
+                console.log(res)
+                this.right[0].children = res.result || []
+            })
+        },
         _initScroll() {
             this.lefts = new BetterScroll(this.$refs.left, {
                 click: true
@@ -187,6 +152,7 @@ export default {
         padding: 0 10px;
         .right-item {
             width: 100%;
+            min-height: 700px;
             text-align: center;
             .right-item-title {
                 text-align: center;
@@ -215,5 +181,4 @@ export default {
     }
 
 }
-
 </style>

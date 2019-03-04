@@ -1,14 +1,13 @@
 <template>
     <div>
         <ul class="item">
-            <li class="item-li" v-for="(item, index) in itemData" :key="index">
-                <div class="img-box">
-                    <img :src="item.img" alt="">
+            <li class="item-li" v-for="(item, index) in itemData" :key="index" @click="goDetail(item.id)">
+                <div class="img-box" >
+                    <img :src="item.view_picture[0].url" alt="图片">
                 </div>
                 <p class="name">{{item.name}}</p>
             </li>
         </ul>
-        <div class="more">查看更多 >></div>
     </div>
 </template>
 
@@ -16,13 +15,23 @@
 export default {
     name: 'ConItem',
     props: {
-        itemData: Array
+        itemData: {
+            type: Array,
+            default: () => []
+        }
+    },
+    methods: {
+        goDetail(params) {
+            console.log(111)
+            this.$router.push({ path: '/app/shopDetail', query: { id: params } })
+        }
     }
 }
 </script>
 
 <style lang="less" scoped>
 .item {
+    height: 100%;
     .item-li {
         width: 33.3%;
         float: left;

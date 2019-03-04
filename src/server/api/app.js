@@ -129,7 +129,7 @@ router.get('/getUserOrder', async (req, res) => {
         }
         JsonWrite(res, result)
     } else {
-        JsonWrite(res, '暂无订单')
+        JsonWrite(res, [])
     }
 })
 module.exports = router

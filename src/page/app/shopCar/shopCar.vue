@@ -1,6 +1,6 @@
 <template>
     <div class="mian">
-        <div class="noLoginMsg" v-if="userInfo">
+        <div class="noLoginMsg" v-if="Object.keys(userInfo).length == 0">
             <span>登陆后享受更多优惠</span>
             <span class="noLogin-arrow">去登陆
                 <i class="iconfont icon-gerenzhongxin"></i>
@@ -37,10 +37,11 @@ export default {
             return this.$store.getters['shopCar/getShopCar']
         },
         userInfo() {
-            return this.$store.getters['userInfo/appUserInfo']
+            return this.$store.getters['userInfo/getAppUserInfo']
         }
     },
     mounted() {
+        console.log(this.userInfo)
         console.log(this.shopCarInfo)
         this.getHotGoods({ hot: 1 })
     },
@@ -70,7 +71,7 @@ export default {
     }
 }
 .noLoginMsg {
-    margin-top: 46px;
+    // margin-top: 46px;
     display: flex;
     justify-content: space-between;
     align-items: center;

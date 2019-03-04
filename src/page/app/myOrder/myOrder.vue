@@ -7,27 +7,30 @@
             <div :class="{ item: true, active: status === 2 }" @click="handle(2)">待收货</div>
             <div :class="{ item: true, active: status === 3 }" @click="handle(3)">已完成</div>
         </div>
-        <div class="wall">
-            <card :header="{title: '订单编号： 54464545646464'}">
+        <div class="wall" v-for="item in orderList" :key="item.id">
+            <card :header="{title: `订单编号：${item.order_number}`}">
                 <div slot="content">
-                    <div class="cont-item"><span>收件人：</span><span>asidhfasdf</span></div>
-                    <div class="cont-item"><span>电话：</span><span>asidhfasdf</span></div>
-                    <div class="cont-item"><span>收件地址：</span><span>asidhfasdf</span></div>
-                    <div class="cont-item"><span>下单日期：</span><span>asidhfasdf</span></div>
-                    <div class="cont-item"><span>最近更新日期：</span><span>asidhfasdf</span></div>
-                    <div class="shop-info">
+                    <div class="cont-item"><span>收件人：</span><span>{{item.name}}</span></div>
+                    <div class="cont-item"><span>电话：</span><span>{{item.phone}}</span></div>
+                    <div class="cont-item"><span>收件地址：</span><span>{{item.address}}</span></div>
+                    <div class="cont-item"><span>下单日期：</span><span>{{item.create_time}}</span></div>
+                    <div class="cont-item"><span>最近更新日期：</span><span>{{item.change_time}}</span></div>
+                    <div class="shop-info" v-for="i in item.goods_info" :key="i.id">
                         <div class="shop-img">
-                            <img src="../../../assets/people.png" alt="">
+                            <img :src="i.shop.view_picture[0].url" alt="图片">
                         </div>
                         <div class="shop-msg">
-                            asidfhasdfasjd
+                            {{i.shop.name}} {{i.shop.size}} {{i.shop.color}}
                         </div>
-                        <div class="shop-num">200 x 2</div>
+                        <div class="shop-num">{{i.shop.price}} x {{i.num}}</div>
                     </div>
                 </div>
                 <div slot="footer" class="footer">
-                    <div class="sum">共2件 239元</div>
-                    <div class="status">已完成</div>
+                    <div class="sum">共{{item.num}}件 {{item.money}}元</div>
+                    <div class="status" v-if='item.status == 0'>全部</div>
+                    <div class="status" v-if='item.status == 1'>待付款</div>
+                    <div class="status" v-if='item.status == 2'>待收货</div>
+                    <div class="status" v-if='item.status == 3'>已完成</div>
                 </div>
             </card>
         </div>
@@ -48,14 +51,23 @@ export default {
             orderList: []
         }
     },
+    computed: {
+        userInfo() {
+            return this.$store.getters['userInfo/getAppUserInfo']
+        }
+    },
+    mounted() {
+        if (this.userInfo.id) {
+            this.handle(0)
+        }
+    },
     methods: {
         handle(index) {
             this.status = index
             apiGetUserOrder({
-                userId: index,
+                userId: this.userInfo.id,
                 type: this.status // 0 全部， 1 待支付， 2 待收货， 3 已完成
             }).then(res => {
-                console.log(res)
                 if (res.code === '00000') {
                     this.orderList = res.result || []
                 }
@@ -67,9 +79,15 @@ export default {
 
 <style lang="less" scoped>
 .main {
-    margin-top: 46px;
+    margin-top: 81px;
     .item-list {
+        position: fixed;
+        top: 46px;
+        right: 0;
+        left: 0;
         display: flex;
+        z-index: 100;
+        background-color: #fff;
         .item {
             position: relative;
             flex: 1;
@@ -93,6 +111,8 @@ export default {
         }
     }
     .wall {
+        padding: 5px 0;
+        background-color: #eee;
         .cont-item {
             display: flex;
             justify-content: space-between;
@@ -117,6 +137,7 @@ export default {
             .shop-msg {
                 flex: 1;
                 margin: 0 10px;
+                font-size: 14px;
             }
         }
         .footer {
