@@ -104,7 +104,7 @@ export default {
         },
         getRoleList() {
             apiGetAllRole().then(res => {
-                this.dealData(res.data || [])
+                this.dealData(res.result || [])
             })
         }
     }

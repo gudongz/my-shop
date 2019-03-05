@@ -41,7 +41,8 @@ export default {
         menu: function(state) {
             if (state.siderMenu.menu.length === 0) {
                 let userInfo = JSON.parse(sessionStorage.getItem('adminUserInfo'))
-                this.setMenu(changeTree(userInfo.power || []))
+                console.log(userInfo)
+                this.setMenu(changeTree(userInfo.powerList || []))
             }
             return state.siderMenu.menu
         }

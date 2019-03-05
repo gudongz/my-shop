@@ -8,7 +8,7 @@
         </div>
         <div class="container">
             <common-table :deploy="deploy" :table-data="tableData" @tableHandle="handle"></common-table>
-            <pagination :page-data="pageData" @pageChange="handlePageChange"></pagination>
+            <!-- <pagination :page-data="pageData" @pageChange="handlePageChange"></pagination> -->
         </div>
         <user-edit-form :edit-form-data="editFormData" @submit="submit"></user-edit-form>
         <user-role-list :role-list-data="roleListData" @saveUserRole="saveUserRole"></user-role-list>
@@ -18,7 +18,7 @@
 <script>
 import BreadCrumb from '../../components/base-breadcrumb'
 import CommonTable from '../components/common-table'
-import Pagination from '@/page/admin/components/base-pagination'
+// import Pagination from '@/page/admin/components/base-pagination'
 import UserEditForm from './components/user-edit-form'
 import UserRoleList from './components/user-role-list'
 
@@ -37,7 +37,7 @@ export default {
     components: {
         BreadCrumb,
         CommonTable,
-        Pagination,
+        // Pagination,
         UserEditForm,
         UserRoleList
     },
@@ -83,8 +83,7 @@ export default {
             apiGetAdminUserList({
                 ...params
             }).then(res => {
-                this.dealData(res.result.data || [])
-                this.pageData.pageCount = res.result.pageCont
+                this.dealData(res.result || [])
             })
         },
         dealData(data) {

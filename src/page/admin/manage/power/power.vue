@@ -41,7 +41,7 @@ export default {
         },
         getAllpower() {
             apiGetAllPower().then(res => {
-                this.treeData = res.data || []
+                this.treeData = res.result || []
             })
         }
     }

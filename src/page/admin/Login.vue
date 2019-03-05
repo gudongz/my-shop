@@ -60,8 +60,8 @@ export default {
                     }).then(res => {
                         $message(res.code, res.message)
                         if (res.code === '00000' || res.code === '00001') {
-                            sessionStorage.setItem('adminUserInfo', JSON.stringify(res.data))
-                            this.setMenu(changeTree(res.data.power || []))
+                            sessionStorage.setItem('adminUserInfo', JSON.stringify(res.result))
+                            this.setMenu(changeTree(res.result.powerList || []))
                             this.logining = false
                             this.$router.push({ path: '/admin/index' })
                         } else {

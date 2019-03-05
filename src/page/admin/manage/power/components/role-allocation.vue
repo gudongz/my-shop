@@ -52,7 +52,7 @@ export default {
         getPowerByRoleId(params) {
             let id = params.data.id
             apiGetPowerByRoleId({ id }).then(res => {
-                this.treeData = res.data || []
+                this.treeData = res.result.powerList || []
             })
         },
         setCheckedId(data) {

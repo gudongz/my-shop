@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="item">
-            <li class="item-li" v-for="(item, index) in itemData" :key="index" @click="goDetail(item.id)">
+            <li class="item-li" v-for="(item, index) in itemData" :key="index" @click.native="goDetail(item.id)">
                 <div class="img-box" >
                     <img :src="item.view_picture[0].url" alt="图片">
                 </div>
