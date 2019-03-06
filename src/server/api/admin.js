@@ -4,7 +4,7 @@ let mysql = require('../dbConnect')
 let router = express.Router()
 
 let JsonWrite = function(res, ret) {
-    if (typeof ret === 'undefined') {
+    if (ret.code) {
         res.json({
             code: '00001',
             message: '操作失败！'
@@ -96,26 +96,152 @@ router.get('/getAllpower', async (req, res) => {
 router.get('/getPowerByRoleId', async (req, res) => {
     let params = req.query
     let data = {}
-    let role = await mysql.connect('select * from `role` where `id` = ?', [params.id])
-    let rolePower = JSON.parse(role[0].power)
-    let powerList = []
-    let allPower = await mysql.connect('select * from `power`')
-    for (let i in allPower) {
-        if (rolePower.indexOf(allPower[i].id) > -1) {
-            powerList.push({ ...allPower[i], checked: true })
-        } else {
-            powerList.push({ ...allPower[i], checked: false })
+    try {
+        let role = await mysql.connect('select * from `role` where `id` = ?', [params.id])
+        let rolePower = JSON.parse(role[0].power)
+        let powerList = []
+        let allPower = await mysql.connect('select * from `power`')
+        for (let i in allPower) {
+            if (rolePower.indexOf(allPower[i].id) > -1) {
+                powerList.push({ ...allPower[i], checked: true })
+            } else {
+                powerList.push({ ...allPower[i], checked: false })
+            }
         }
+        data = { ...role[0], powerList }
+        JsonWrite(res, data)
+    } catch (error) {
+        JsonWrite(res, error)
     }
-    data = { ...role[0], powerList }
-    JsonWrite(res, data)
 })
 // 获取所有管理员用户
 router.get('/getAdminUserList', async (req, res) => {
-    let userInfo = await mysql.connect('select * from `admin_user`')
-    for (let i in userInfo) {
-        userInfo[i].haveRole = await mysql.connect('select * from `role` where id = ?', [userInfo[i].role])
+    try {
+        let userInfo = await mysql.connect('select * from `admin_user`')
+        for (let i in userInfo) {
+            userInfo[i].haveRole = await mysql.connect('select * from `role` where id = ?', [userInfo[i].role])
+        }
+        JsonWrite(res, userInfo)
+    } catch (error) {
+        JsonWrite(res, error)
     }
-    JsonWrite(res, userInfo)
+})
+
+// 更新角色权限
+router.post('/editRolePower', async (req, res) => {
+    let params = req.body
+    try {
+        let result = await mysql.connect('update `role` set `power` = ? where `id` = ?', [params.ids, params.roleId])
+        if (result) {
+            JsonWrite(res, '修改成功')
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+// 角色的添加和修改type
+router.post('/addOrUpdateRole', async (req, res) => {
+    let params = req.body
+    try {
+        if (params.id === '') {
+            let str = '[1]'
+            let result = await mysql.connect('insert into `role` (name, type, power) value (?, ?, ?)', [params.name, params.type, str])
+            if (result) {
+                JsonWrite(res, '添加成功')
+            }
+        } else {
+            let result = await mysql.connect('update `role` set `name` = ?, `type` = ? where `id` = ?', [params.name, params.type, params.id])
+            if (result) {
+                JsonWrite(res, '修改成功')
+            }
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+
+// 根据用户id 获取角色
+router.get('/getRoleByUserId', async (req, res) => {
+    let params = req.query
+    try {
+        let userRoleId = await mysql.connect('select `role` from `admin_user` where `id` = ?', [params.id])
+        let roleList = await mysql.connect('select * from `role`')
+        for (let i in roleList) {
+            /* eslint-disable */
+            if (roleList[i].id == userRoleId[0].role) {
+                roleList[i].checked = true
+            }
+            /* eslint-enable */
+        }
+        JsonWrite(res, roleList)
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+
+// 为用户分配角色
+router.post('/updateUserRole', async (req, res) => {
+    let params = req.body
+    try {
+        let result = await mysql.connect('update `admin_user` set `role` = ? where `id` = ?', [params.rids, params.uid])
+        if (result) {
+            JsonWrite(res, '修改成功')
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+
+// 添加 或 修改 管理员用户
+router.post('/updateOrAddUser', async (req, res) => {
+    let params = req.body
+    try {
+        if (params.id === '') {
+            let isHave = await mysql.connect('select * from `admin_user` where `phone` = ?', [params.phone])
+            // console.log(isHave)
+            // 如果已存在该手机号，抛出错误
+            if (isHave.length > 0) {
+                let obj = {
+                    code: '000'
+                }
+                throw obj
+            } else {
+                let result = await mysql.connect('insert into  `admin_user` (name, phone, password, role, status) value (?, ?, ?, ?, ?)', [
+                    params.name,
+                    params.phone,
+                    params.password,
+                    0,
+                    1
+                ])
+                if (result) {
+                    JsonWrite(res, '添加成功')
+                }
+            }
+        } else {
+            let result = await mysql.connect('update `admin_user` set `phone` = ?, `name` = ? where `id` = ?', [params.phone, params.name, params.id])
+            if (result) {
+                JsonWrite(res, '修改成功')
+            }
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+
+// 更改用户状态，设置为无效 / 设置为有效
+router.post('/deleteAdminUser', async (req, res) => {
+    let params = req.body
+    try {
+        let userStatus = await mysql.connect('select `status` from `admin_user` where `id` = ?', [params.id])
+        let status = userStatus[0].status === '0'
+            ? 1
+            : 0
+        let result = await mysql.connect('update `admin_user` set `status` = ? where `id` = ?', [status, params.id])
+        if (result) {
+            JsonWrite(res, '修改成功')
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
 })
 module.exports = router
