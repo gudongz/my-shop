@@ -57,9 +57,10 @@ export default {
         },
         setCheckedId(data) {
             let params = {
-                ids: data.join(','),
+                ids: JSON.stringify(data),
                 roleId: this.allocationData.data.id
             }
+            console.log(params)
             apiEditRolePower(params).then(res => {
                 $message(res.code, res.message)
                 this.allocationData.isShow = false

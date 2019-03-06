@@ -88,13 +88,13 @@ export default {
         },
         dealData(data) {
             let dealArr = data.map((item) => {
-                item.dealStatus = !item.status
+                item.dealStatus = item.status === '0'
                     ? '无效'
                     : '有效'
                 item.dealRoleList = item.haveRole.map((val) => {
                     return val.name
                 })
-                item.handle = !item.status
+                item.handle = item.status === '0'
                     ? ['分配角色', '修改', '设置有效']
                     : ['分配角色', '修改', '设置无效']
                 item.dealRoleList = item.dealRoleList.join('，')
@@ -165,11 +165,12 @@ export default {
             // 判断用户操作，0 分配角色，1 修改， 2 更改用户状态
             let mapHandle = {
                 0: () => {
+                    console.log(data)
                     apiGetRoleByUserId({ id: data.data.id }).then(res => {
                         this.roleListData = {
                             isShow: true,
                             userId: data.data.id,
-                            data: res.data || []
+                            data: res.result || []
                         }
                     })
                 },

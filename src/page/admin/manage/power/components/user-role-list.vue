@@ -1,11 +1,11 @@
 <template>
     <div>
         <el-dialog title="选择角色" :visible.sync="roleListData.isShow" width="550px">
-            <el-checkbox-group v-model="checkList">
+            <el-radio-group v-model="checkList">
                 <div class="item" v-for="item in list" :key="item.id">
-                    <el-checkbox :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
+                    <el-radio :label="item.id" :key="item.id">{{item.name}}</el-radio>
                 </div>
-            </el-checkbox-group>
+            </el-radio-group>
             <div slot="footer">
                 <el-button size="mini" @click="roleListData.isShow = false">取消</el-button>
                 <el-button size="mini" type="primary" @click="submit">提交</el-button>
@@ -22,7 +22,7 @@ export default {
     },
     data() {
         return {
-            checkList: []
+            checkList: 0
         }
     },
     computed: {
@@ -33,14 +33,11 @@ export default {
     watch: {
         roleListData: {
             handler(val) {
-                console.log(val.data)
-                let arr = []
                 for (let i in val.data) {
                     if (val.data[i].checked) {
-                        arr.push(val.data[i].id)
+                        this.checkList = val.data[i].id
                     }
                 }
-                this.checkList = [ ...arr ]
             }
         }
     },

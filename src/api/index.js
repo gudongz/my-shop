@@ -22,7 +22,7 @@ export const apiGetRoleByUserId = (params) => { return get('/api/admin/getRoleBy
 export const apiUpdateOrAddUser = (params) => { return post('/api/admin/updateOrAddUser', params) }
 // 用户管理 ==> 为用户分配角色
 export const apiUpdateUserRole = (params) => { return post('/api/admin/updateUserRole', params) }
-// 用户管理 ==> 设置用户为无效状态
+// 用户管理 ==> 设置用户为无效状态 或设置为有效
 export const apiDeleteAdminUser = (params) => { return post('/api/admin/deleteAdminUser', params) }
 
 /* * * * * *  商品管理   * * * * * */
