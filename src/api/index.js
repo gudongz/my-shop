@@ -26,8 +26,11 @@ export const apiUpdateUserRole = (params) => { return post('/api/admin/updateUse
 export const apiDeleteAdminUser = (params) => { return post('/api/admin/deleteAdminUser', params) }
 
 /* * * * * *  商品管理   * * * * * */
-// 用户管理 ==> 设置用户为无效状态
+// 获取商品，‘’ 获取全部 、 1 获取手机、 2 获取电脑
 export const apiGetGoods = (params) => { return get('/api/admin/getGoods', params) }
+/* * * * * *  商品管理   * * * * * */
+// 获取app端用户
+export const apiGetAppUser = (params) => { return get('/api/admin/getAppUser', params) }
 
 /* ========================================= app端 =================================================== */
 

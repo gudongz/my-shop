@@ -58,8 +58,8 @@ export default {
                         phone: this.ruleForm2.account,
                         password: this.ruleForm2.checkPass
                     }).then(res => {
-                        $message(res.code, res.message)
-                        if (res.code === '00000' || res.code === '00001') {
+                        if (res.code === '00000' && res.result.id) {
+                            $message(res.code, '登陆成功')
                             sessionStorage.setItem('adminUserInfo', JSON.stringify(res.result))
                             this.setMenu(changeTree(res.result.powerList || []))
                             this.logining = false

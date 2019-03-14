@@ -244,4 +244,30 @@ router.post('/deleteAdminUser', async (req, res) => {
         JsonWrite(res, error)
     }
 })
+
+// 更改用户状态，设置为无效 / 设置为有效
+router.get('/getGoods', async (req, res) => {
+    let params = req.query
+    try {
+        if (params.type === '' || params.type === 0) {
+            let result = await mysql.connect('select * from `goods`')
+            JsonWrite(res, result)
+        } else {
+            let result = await mysql.connect('select * from `goods` where `classify` = ?', [params.type])
+            JsonWrite(res, result)
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+
+// 更改用户状态，设置为无效 / 设置为有效
+router.get('/getAppUser', async (req, res) => {
+    try {
+        let result = await mysql.connect('select * from `app_user`')
+        JsonWrite(res, result)
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
 module.exports = router

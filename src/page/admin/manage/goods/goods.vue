@@ -10,7 +10,7 @@
                     <el-form class="form" size="mini" :inline="true">
                         <el-form-item label="类型：">
                             <el-select v-model="search" placeholder="请选择">
-                                <el-option label="全部" value="0"></el-option>
+                                <el-option label="全部" value=""></el-option>
                                 <el-option label="手机" value="1"></el-option>
                                 <el-option label="电脑" value="2"></el-option>
                             </el-select>
@@ -22,7 +22,6 @@
         </div>
         <div class="container">
             <common-table :deploy="deploy" :table-data="tableData" @tableHandle="handle"></common-table>
-            <pagination :pageData="pageData" @pageChange="pageChange"></pagination>
         </div>
         <edit-form :editFormData="editFormData"></edit-form>
     </div>
@@ -30,13 +29,12 @@
 
 <script>
 import BreadCrumb from '../../components/base-breadcrumb'
-import Pagination from '../../components/base-pagination'
 import CommonTable from '../components/common-table'
 import EditForm from './components/EditForm'
 import { apiGetGoods } from '@/api/index'
 export default {
     name: 'ShopManage',
-    components: { BreadCrumb, Pagination, CommonTable, EditForm },
+    components: { BreadCrumb, CommonTable, EditForm },
     data() {
         return {
             breadcrumbList: ['商品管理'],
@@ -53,15 +51,10 @@ export default {
                 ]
             },
             tableData: [],
-            search: '0',
+            search: '',
             editFormData: {
                 isShow: false,
                 data: {}
-            },
-            pageData: {
-                pageIndex: 1,
-                pageSize: 10,
-                pageCount: 10
             }
         }
     },
@@ -94,8 +87,8 @@ export default {
             apiGetGoods({
                 type
             }).then(res => {
-                this.pageData.pageCount = res.result.total
-                this.dealData(res.result.data || [])
+                console.log(res)
+                this.dealData(res.result || [])
             })
         },
         handle(data) {
@@ -112,8 +105,8 @@ export default {
             mapHandle[data.type]()
         },
         dealData(data) {
-            let obj = [...data]
-            obj.map(item => {
+            let arr = [...data]
+            arr.map(item => {
                 item.handle = ['编辑', '删除']
                 if (item.classify === 1) {
                     item.classifyName = '手机'
@@ -121,7 +114,7 @@ export default {
                     item.classifyName = '电脑'
                 }
             })
-            this.tableData = obj
+            this.tableData = arr
         },
         pageChange() {
 
