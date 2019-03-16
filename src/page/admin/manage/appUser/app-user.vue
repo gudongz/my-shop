@@ -51,7 +51,7 @@ export default {
         },
         handle(data) {
             console.log(data)
-            this.$router.push({ path: '/admin/orders', query: data.id })
+            this.$router.push({ path: '/admin/orders', query: { id: data.data.id } })
         }
     }
 }

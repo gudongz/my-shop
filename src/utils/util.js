@@ -43,7 +43,7 @@ export function getDate() {
     let minutes = date.getMinutes()
     let seconds = date.getSeconds()
     let milliseconds = date.getMilliseconds()
-    return `${year}-${filterTime(day)}-${filterTime(month)}-${filterTime(hours)}-${filterTime(minutes)}-${filterTime(seconds)}-${filterTime(milliseconds)}`
+    return `${year}-${filterTime(month + 1)}-${filterTime(day)} ${filterTime(hours)}:${filterTime(minutes)}:${filterTime(seconds)}:${filterTime(milliseconds)}`
 }
 function filterTime(val) {
     if (val < 10) {

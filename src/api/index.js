@@ -31,6 +31,11 @@ export const apiGetGoods = (params) => { return get('/api/admin/getGoods', param
 /* * * * * *  商品管理   * * * * * */
 // 获取app端用户
 export const apiGetAppUser = (params) => { return get('/api/admin/getAppUser', params) }
+/* * * * * *  订单管理   * * * * * */
+// 获取订单
+export const apiGetOrders = (params) => { return get('/api/admin/getOrders', params) }
+// 更改订单状态
+export const apiUpdateOrderStatus = (params) => { return post('/api/admin/updateOrderStatus', params) }
 
 /* ========================================= app端 =================================================== */
 

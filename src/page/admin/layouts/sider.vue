@@ -9,12 +9,12 @@
                 <template v-if="item.children">
                     <el-submenu :index="item.url" v-if="item.checked" :key="item.id">
                         <template slot="title">
-                            <i class="el-icon-location"></i>
+                            <i class="el-icon-setting"></i>
                             <span>{{item.name}}</span>
                         </template>
                         <template v-for="i in item.children">
                             <el-menu-item :index="i.url" v-if="i.checked" :key="i.id">
-                                <i class="el-icon-menu"></i>
+                                <i class="el-icon-tickets"></i>
                                 <span slot="title">{{i.name}}</span>
                             </el-menu-item>
                         </template>

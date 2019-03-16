@@ -1,5 +1,5 @@
 let express = require('express')
-// let $sql = require('../sqlMap')
+let $sql = require('../sqlMap')
 let mysql = require('../dbConnect')
 let router = express.Router()
 
@@ -18,8 +18,8 @@ let JsonWrite = function(res, ret) {
     }
 }
 
-// const SQLgetGoodsViewPicture = $sql.app.getGoodsViewPicture
-// const SQLgetGoodsMessagePicture = $sql.app.getGoodsMessagePicture
+const SQLgetGoodsViewPicture = $sql.app.getGoodsViewPicture
+const SQLgetGoodsMessagePicture = $sql.app.getGoodsMessagePicture
 // // 获取全部热门商品
 // router.get('/getHotGoods', async (req, res) => {
 //     let sql = $sql.app.getHotGoods
@@ -245,7 +245,7 @@ router.post('/deleteAdminUser', async (req, res) => {
     }
 })
 
-// 更改用户状态，设置为无效 / 设置为有效
+// 获取商品，type为 ‘’ 时获取全部、1 获取手机、2 获取电脑
 router.get('/getGoods', async (req, res) => {
     let params = req.query
     try {
@@ -261,11 +261,57 @@ router.get('/getGoods', async (req, res) => {
     }
 })
 
-// 更改用户状态，设置为无效 / 设置为有效
+// 获取所有app端用户
 router.get('/getAppUser', async (req, res) => {
     try {
         let result = await mysql.connect('select * from `app_user`')
         JsonWrite(res, result)
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+// 获取订单， id 为 ‘’ 时获取全部
+router.get('/getOrders', async (req, res) => {
+    let params = req.query
+    try {
+        let result
+        if (params.id === '') {
+            result = await mysql.connect('select * from `order`')
+        } else {
+            result = await mysql.connect('select * from `order` where `user_id` = ?', [params.id])
+        }
+        if (result[0]) {
+            for (let i in result) {
+                let userName = await mysql.connect('select `name` from `app_user` where `id` = ?', [result[i].user_id])
+                result[i]['userName'] = userName[0].name
+                let arr = JSON.parse(result[i].goods_info)
+                for (let j in arr) {
+                    let shopMsg = await mysql.connect('select * from `goods` where `id` = ?', [arr[j].id])
+                    arr[j].shop = shopMsg[0]
+
+                    arr[j].shop.view_picture = await mysql.connect(SQLgetGoodsViewPicture, [arr[j].id])
+                    arr[j].shop.message_picture = await mysql.connect(SQLgetGoodsMessagePicture, [arr[j].id])
+                    result[i].goods_info = arr
+                }
+            }
+            JsonWrite(res, result)
+        } else {
+            JsonWrite(res, [])
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+// 更改订单状态
+router.post('/updateOrderStatus', async (req, res) => {
+    let params = req.body
+    try {
+        let result = await mysql.connect('update `order` set `status` = ?, `change_time` = ? where `id` = ?', [params.status, params.date, params.id])
+        if (result.changedRows !== 0) {
+            JsonWrite(res, { success: true })
+        } else {
+            JsonWrite(res, { success: false })
+        }
     } catch (error) {
         JsonWrite(res, error)
     }
