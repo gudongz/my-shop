@@ -3,7 +3,8 @@
         <ul class="item">
             <li class="item-li" v-for="(item, index) in itemData" :key="index" @click.native="goDetail(item.id)">
                 <div class="img-box" >
-                    <img :src="item.view_picture[0].url" alt="图片">
+                    <img v-if="item.view_picture[0].url" :src="item.view_picture[0].url" alt="图片">
+                    <img v-if="!item.view_picture[0].url" src="../../../../assets/timg.jpg" alt="图片">
                 </div>
                 <p class="name">{{item.name}}</p>
             </li>
@@ -18,6 +19,13 @@ export default {
         itemData: {
             type: Array,
             default: () => []
+        }
+    },
+    watch: {
+        itemData: {
+            handler(val) {
+                console.log(val)
+            }
         }
     },
     methods: {

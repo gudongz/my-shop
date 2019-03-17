@@ -40,6 +40,7 @@ export default {
     },
     data() {
         return {
+            nowId: 1,
             left: [{ title: '手机', id: 1 }, { title: '电脑', id: 2 }],
             right: [
                 {
@@ -66,8 +67,13 @@ export default {
     methods: {
         getGoodsByClassify(params) {
             apiGetGoodsByClassify(params).then(res => {
-                // console.log(res)
-                this.right[0].children = res.result || []
+                console.log(res)
+                console.log(this.nowId)
+                if (this.nowId === 1) {
+                    this.right[0].children = res.result || []
+                } else {
+                    this.right[1].children = res.result || []
+                }
             })
             // apiGetHotGoods({
             //     ...params
@@ -104,7 +110,8 @@ export default {
             }
         },
         selectItem(index, id, event) {
-            console.log(id)
+            // console.log(id)
+            this.nowId = id
             this.scrollY = this.listHeight[index]
             this.rights.scrollTo(0, -this.scrollY, 200)
             this.getGoodsByClassify({ classify: id })
