@@ -23,7 +23,7 @@
         <div class="container">
             <common-table :deploy="deploy" :table-data="tableData" @tableHandle="handle"></common-table>
         </div>
-        <edit-form :editFormData="editFormData"></edit-form>
+        <edit-form :editFormData="editFormData" @submit="submit"></edit-form>
     </div>
 </template>
 
@@ -31,7 +31,7 @@
 import BreadCrumb from '../../components/base-breadcrumb'
 import CommonTable from '../components/common-table'
 import EditForm from './components/EditForm'
-import { apiGetGoods } from '@/api/index'
+import { apiGetGoods, apiAddOrUpdateGoods } from '@/api/index'
 export default {
     name: 'ShopManage',
     components: { BreadCrumb, CommonTable, EditForm },
@@ -69,6 +69,7 @@ export default {
             this.editFormData = {
                 isShow: true,
                 data: {
+                    id: '',
                     name: '',
                     color: '',
                     size: '',
@@ -78,8 +79,8 @@ export default {
                     classify: '',
                     hot: '',
                     message: '',
-                    messagePicture: '',
-                    viewPicture: ''
+                    message_picture: [],
+                    view_picture: []
                 }
             }
         },
@@ -115,6 +116,12 @@ export default {
                 }
             })
             this.tableData = arr
+        },
+        submit(data) {
+            apiAddOrUpdateGoods({ ...data }).then(res => {
+                this.getGoods(this.search)
+                this.editFormData.isShow = false
+            })
         },
         pageChange() {
 

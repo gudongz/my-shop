@@ -32,10 +32,32 @@
                     <el-input v-model="form.message" type="textarea" :autosize="{minRows: 3, maxRows: 3}" placeholder="请输入商品描述"></el-input>
                 </el-form-item>
                 <el-form-item label="轮播图片" class="textarea" label-width="90px">
-                    <el-input v-model="form.messagePicture" type="textarea" :autosize="{minRows: 3, maxRows: 3}" placeholder="请输入商品轮播图片地址，多个地址请用“,”隔开"></el-input>
+                    <!-- <el-input v-model="form.messagePicture" type="textarea" :autosize="{minRows: 3, maxRows: 3}" placeholder="请输入商品轮播图片地址，多个地址请用“,”隔开"></el-input> -->
+                    <el-upload
+                        class="upload"
+                        action="https://upload.qiniup.com"
+                        list-type="picture-card"
+                        :file-list="view_picture"
+                        :before-upload="beforeUpload"
+                        :on-remove="viewRemove"
+                        :on-success="viewSuccess"
+                        :data="upToken">
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
                 </el-form-item>
                 <el-form-item label="详情图片" class="textarea" label-width="90px">
-                    <el-input v-model="form.viewPicture" type="textarea" :autosize="{minRows: 3, maxRows: 3}" placeholder="请输入商品详情图片地址，多个地址请用“,”隔开"></el-input>
+                    <!-- <el-input v-model="form.viewPicture" type="textarea" :autosize="{minRows: 3, maxRows: 3}" placeholder="请输入商品详情图片地址，多个地址请用“,”隔开"></el-input> -->
+                    <el-upload
+                        class="upload"
+                        action="https://upload.qiniup.com"
+                        list-type="picture-card"
+                        :file-list="message_picture"
+                        :before-upload="beforeUpload"
+                        :on-success="messageSuccess"
+                        :on-remove="messageRemove"
+                        :data="upToken">
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
                 </el-form-item>
             </el-form>
             <div slot="footer">
@@ -47,6 +69,7 @@
 </template>
 
 <script>
+import { apiGetToken } from '@/api/index'
 export default {
     name: 'GoodsEditForm',
     props: {
@@ -55,20 +78,72 @@ export default {
     data() {
         return {
             form: {
-            }
+            },
+            dialogImageUrl: '',
+            dialogVisible: false,
+            view_picture: [],
+            message_picture: [],
+            upToken: {
+                token: ''
+                // key: ''
+            },
+            test: ''
         }
     },
     watch: {
         editFormData: {
             handler(val) {
                 this.form = { ...val.data }
+                this.dealData(val.data || {})
             },
             deep: true
         }
     },
+    mounted() {
+        apiGetToken().then(res => {
+            if (res.result !== 'error') {
+                this.upToken.token = res.result
+            }
+        })
+    },
     methods: {
+        dealData(data) {
+            this.message_picture = data.message_picture.map(item => {
+                return { url: item.url }
+            })
+            this.view_picture = data.view_picture.map(item => {
+                return { url: item.url }
+            })
+        },
         submit() {
-            console.log(this.form)
+            this.form.view_picture = this.view_picture.map(item => {
+                return item.url
+            })
+            this.form.message_picture = this.message_picture.map(item => {
+                return item.url
+            })
+            this.$emit('submit', this.form)
+        },
+        beforeUpload(file, fileList) {
+            // console.log(file, fileList)
+        },
+        viewRemove(file, fileList) {
+            this.view_picture = [...fileList]
+        },
+        messageRemove(file, fileList) {
+            this.message_picture = [...fileList]
+        },
+        viewSuccess(response, file, fileList) {
+            if (file.status === 'success') {
+                let url = `http://pogpktyy6.bkt.clouddn.com/${response.key}`
+                this.view_picture.push({ url })
+            }
+        },
+        messageSuccess(response, file, fileList) {
+            if (file.status === 'success') {
+                let url = `http://pogpktyy6.bkt.clouddn.com/${response.key}`
+                this.message_picture.push({ url })
+            }
         }
     }
 }
@@ -84,4 +159,24 @@ export default {
 .textarea /deep/ .el-form-item__content {
     width: 78%;
 }
+.img-box {
+    img {
+        height: 80px;
+        width: 80px;
+        border-radius: 6px;
+    }
+}
+.upload /deep/ .el-upload {
+    height: 80px;
+    width: 80px;
+    line-height: 90px;
+}
+.upload /deep/ .el-upload-list__item {
+    height: 80px;
+    width: 80px;
+}
+// .upload {
+//     height: 100px;
+//     width: 100px;
+// }
 </style>

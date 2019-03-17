@@ -31,6 +31,10 @@ export const apiGetGoods = (params) => { return get('/api/admin/getGoods', param
 /* * * * * *  商品管理   * * * * * */
 // 获取app端用户
 export const apiGetAppUser = (params) => { return get('/api/admin/getAppUser', params) }
+// 获取七牛云token
+export const apiGetToken = (params) => { return post('/api/admin/token', params) }
+// 添加或更改商品
+export const apiAddOrUpdateGoods = (params) => { return post('/api/admin/addOrUpdateGoods', params) }
 /* * * * * *  订单管理   * * * * * */
 // 获取订单
 export const apiGetOrders = (params) => { return get('/api/admin/getOrders', params) }

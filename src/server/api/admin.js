@@ -3,6 +3,12 @@ let $sql = require('../sqlMap')
 let mysql = require('../dbConnect')
 let router = express.Router()
 
+let qiniu = require('qiniu') // 需要加载qiniu模块的
+
+const accessKey = 'Nfl_o508VoLzbQP-lEr8Hz5j62_xOO2beL8a_2wJ'
+const secretKey = '3d4DgFfEfOUfo6fa_5mqFEha1Tk0NtT-gZQQoIKC'
+const bucket = 'shop'
+
 let JsonWrite = function(res, ret) {
     if (ret.code) {
         res.json({
@@ -20,6 +26,22 @@ let JsonWrite = function(res, ret) {
 
 const SQLgetGoodsViewPicture = $sql.app.getGoodsViewPicture
 const SQLgetGoodsMessagePicture = $sql.app.getGoodsMessagePicture
+
+router.post('/token', async (req, res) => {
+    let mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
+    let options = {
+        scope: bucket,
+        expires: 3600 * 24
+    }
+    let putPolicy = new qiniu.rs.PutPolicy(options)
+    let uploadToken = putPolicy.uploadToken(mac)
+    if (uploadToken) {
+        JsonWrite(res, uploadToken)
+        // ctx.body = Code('re_success', uploadToken)
+    } else {
+        JsonWrite(res, 'error')
+    }
+})
 // // 获取全部热门商品
 // router.get('/getHotGoods', async (req, res) => {
 //     let sql = $sql.app.getHotGoods
@@ -249,13 +271,19 @@ router.post('/deleteAdminUser', async (req, res) => {
 router.get('/getGoods', async (req, res) => {
     let params = req.query
     try {
+        let result
         if (params.type === '' || params.type === 0) {
-            let result = await mysql.connect('select * from `goods`')
-            JsonWrite(res, result)
+            result = await mysql.connect('select * from `goods`')
+            // JsonWrite(res, result)
         } else {
-            let result = await mysql.connect('select * from `goods` where `classify` = ?', [params.type])
-            JsonWrite(res, result)
+            result = await mysql.connect('select * from `goods` where `classify` = ?', [params.type])
+            // JsonWrite(res, result)
         }
+        for (let i in result) {
+            result[i].view_picture = await mysql.connect(SQLgetGoodsViewPicture, [result[i].id])
+            result[i].message_picture = await mysql.connect(SQLgetGoodsMessagePicture, [result[i].id])
+        }
+        JsonWrite(res, result)
     } catch (error) {
         JsonWrite(res, error)
     }
@@ -311,6 +339,61 @@ router.post('/updateOrderStatus', async (req, res) => {
             JsonWrite(res, { success: true })
         } else {
             JsonWrite(res, { success: false })
+        }
+    } catch (error) {
+        JsonWrite(res, error)
+    }
+})
+// 更改订单状态
+router.post('/addOrUpdateGoods', async (req, res) => {
+    let params = req.body
+    try {
+        // '' 为添加， 有id 为修改
+        if (params.id === '') {
+            let result = await mysql.connect('insert into `goods` (name, color, size, brand, price, store, classify, hot, message, message_picture, view_picture) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                params.name,
+                params.color,
+                params.size,
+                params.brand,
+                params.price,
+                params.store,
+                params.classify,
+                params.hot,
+                params.message,
+                '',
+                ''
+            ])
+            //成功添加到goods中后，将对应的图片添加到图片表中
+            for (let i in params.view_picture) {
+                await mysql.connect('insert into `view_picture` (goods_id, url) value (?, ?)', [result.insertId, params.view_picture[i]])
+            }
+            for (let i in params.message_picture) {
+                await mysql.connect('insert into `message_picture` (goods_id, url) value (?, ?)', [result.insertId, params.message_picture[i]])
+            }
+            JsonWrite(res, { success: true })
+        } else {
+            await mysql.connect('update `goods` set `name` = ?, `color` = ?, `size` = ?, `brand` = ?, `price` = ?, `store` = ?, `classify` = ?, `hot` = ?, `message` = ? where `id` = ?', [
+                params.name,
+                params.color,
+                params.size,
+                params.brand,
+                params.price,
+                params.store,
+                params.classify,
+                params.hot,
+                params.message,
+                params.id
+            ])
+            // 先将表中的图片删除，之后再添加，避免重复
+            await mysql.connect('delete from `view_picture` where `goods_id` = ?', [params.id])
+            await mysql.connect('delete from `message_picture` where `goods_id` = ?', [params.id])
+            for (let i in params.view_picture) {
+                await mysql.connect('insert into `view_picture` (goods_id, url) value (?, ?)', [params.id, params.view_picture[i]])
+            }
+            for (let i in params.message_picture) {
+                await mysql.connect('insert into `message_picture` (goods_id, url) value (?, ?)', [params.id, params.message_picture[i]])
+            }
+            JsonWrite(res, { success: true })
         }
     } catch (error) {
         JsonWrite(res, error)
