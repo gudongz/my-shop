@@ -122,8 +122,8 @@ export default {
             let obj = {
                 userId: this.userInfo.id, // 用户id
                 orderNumber: `${this.userInfo.id}${strDate}`, // 订单编号
-                // goodsInfo: JSON.stringify(goodsInfo), // 商品信息
-                goodsInfo,
+                goodsInfo: JSON.stringify(goodsInfo), // 商品信息
+                // goodsInfo,
                 status: 1, // 订单状态，1 = 已支付
                 money: this.sumMoney, // 总订单
                 num: this.shopCarNum, // 总数量
@@ -133,6 +133,7 @@ export default {
                 createTime: date, // 订单创建日期
                 changeTime: date // 订单变更日期
             }
+            // console.log(obj)
             apiAddOrder({
                 ...obj
             }).then(res => {

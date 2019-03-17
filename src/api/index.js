@@ -43,6 +43,8 @@ export const apiUpdateOrderStatus = (params) => { return post('/api/admin/update
 export const apiGetHotGoods = (params) => { return get('/api/app/getHotGoods', params) }
 // 获取全部商品
 export const apiGetAllGoods = (params) => { return get('/api/app/getAllGoods', params) }
+// 根据分类获取商品
+export const apiGetGoodsByClassify = (params) => { return get('/api/app/getGoodsByClassify', params) }
 // 根据 id 查询商品
 export const apiGetGoodsById = (params) => { return get('/api/app/getGoodsById', params) }
 // 用户登陆

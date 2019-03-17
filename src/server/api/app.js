@@ -113,8 +113,13 @@ router.post('/addOrder', async (req, res) => {
 // app 端 获取用户订单
 router.get('/getUserOrder', async (req, res) => {
     let params = req.query
-    // let result = await mysql.connect('select * from `order` where `user_id` = ? and `status` = ?', [params.userId, params.type])
-    let result = await mysql.connect('select * from `order` where `user_id` = ?', [params.userId])
+    console.log(params)
+    let result
+    if (params.type === '999') {
+        result = await mysql.connect('select * from `order` where `user_id` = ?', [params.userId])
+    } else {
+        result = await mysql.connect('select * from `order` where `user_id` = ? and `status` = ?', [params.userId, params.type])
+    }
     if (result[0]) {
         for (let i in result) {
             let arr = JSON.parse(result[i].goods_info)
@@ -130,6 +135,20 @@ router.get('/getUserOrder', async (req, res) => {
         JsonWrite(res, result)
     } else {
         JsonWrite(res, [])
+    }
+})
+// 根据分类获取商品 1 手机 2 电脑
+router.get('/getGoodsByClassify', async (req, res) => {
+    let params = req.query
+    try {
+        let result = await mysql.connect('select * from `goods` where `classify` = ?', [params.classify])
+        for (let i in result) {
+            result[i].view_picture = await mysql.connect(SQLgetGoodsViewPicture, [result[i].id])
+            result[i].message_picture = await mysql.connect(SQLgetGoodsMessagePicture, [result[i].id])
+        }
+        JsonWrite(res, result)
+    } catch (error) {
+        JsonWrite(res, error)
     }
 })
 module.exports = router

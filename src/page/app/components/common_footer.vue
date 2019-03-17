@@ -1,5 +1,5 @@
 <template>
-    <tabbar class="footer" v-model="activeIndex" @on-index-change="indexChange">
+    <tabbar class="footer" v-model="activeIndex">
         <tabbar-item class="label" index="0" link="/app/index">
             <i slot="icon" class="iconfont icon-shouye"></i>
             <span slot="label">首页</span>
@@ -30,10 +30,18 @@ export default {
             activeIndex: 0
         }
     },
-    methods: {
-        indexChange(index) {
-            // console.log(index)
-            // this.activeIndex = index
+    watch: {
+        '$route': {
+            handler(params) {
+                const mapUrl = {
+                    '/app/index': 0,
+                    '/app/classify': 1,
+                    '/app/shopCar': 2,
+                    '/app/myCenter': 3
+                }
+                this.activeIndex = mapUrl[params.path]
+            },
+            immediate: true
         }
     }
 }

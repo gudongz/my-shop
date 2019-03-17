@@ -2,10 +2,10 @@
     <div class="main">
         <common-header></common-header>
         <div class="item-list">
-            <div :class="{ item: true, active: status === 0 }" @click="handle(0)">全部</div>
-            <div :class="{ item: true, active: status === 1 }" @click="handle(1)">待支付</div>
-            <div :class="{ item: true, active: status === 2 }" @click="handle(2)">待收货</div>
-            <div :class="{ item: true, active: status === 3 }" @click="handle(3)">已完成</div>
+            <div :class="{ item: true, active: status === 999 }" @click="handle(999)">全部</div>
+            <div :class="{ item: true, active: status === 0 }" @click="handle(0)">待支付</div>
+            <div :class="{ item: true, active: status === 3 }" @click="handle(3)">待收货</div>
+            <div :class="{ item: true, active: status === 4 }" @click="handle(4)">已完成</div>
         </div>
         <div class="wall" v-for="item in orderList" :key="item.id">
             <card :header="{title: `订单编号：${item.order_number}`}">
@@ -27,10 +27,11 @@
                 </div>
                 <div slot="footer" class="footer">
                     <div class="sum">共{{item.num}}件 {{item.money}}元</div>
-                    <div class="status" v-if='item.status == 0'>全部</div>
-                    <div class="status" v-if='item.status == 1'>待付款</div>
-                    <div class="status" v-if='item.status == 2'>待收货</div>
-                    <div class="status" v-if='item.status == 3'>已完成</div>
+                    <div class="status" v-if='item.status == 0'>待支付</div>
+                    <div class="status" v-if='item.status == 1'>已支付</div>
+                    <div class="status" v-if='item.status == 2'>待发货</div>
+                    <div class="status" v-if='item.status == 3'>已发货</div>
+                    <div class="status" v-if='item.status == 4'>已完成</div>
                 </div>
             </card>
         </div>
@@ -46,7 +47,7 @@ export default {
     components: { CommonHeader, Card },
     data() {
         return {
-            status: 0,
+            status: 999,
             test: 'hasdfasd',
             orderList: []
         }
