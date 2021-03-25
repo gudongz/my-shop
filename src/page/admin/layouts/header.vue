@@ -2,7 +2,7 @@
     <div>
         <el-dropdown class="loginOut" trigger="click">
             <span class="username">
-                <i class="iconfont icon-gerenzhongxin"></i><span>测试</span><i class="el-icon-caret-bottom"></i>
+                <i class="iconfont icon-gerenzhongxin"></i><span>admin</span><i class="el-icon-caret-bottom"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item><span class="out" @click="loginOut"><i class="iconfont icon-shezhi"></i>退出</span></el-dropdown-item>

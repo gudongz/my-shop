@@ -135,13 +135,13 @@ export default {
         },
         viewSuccess(response, file, fileList) {
             if (file.status === 'success') {
-                let url = `http://pogpktyy6.bkt.clouddn.com/${response.key}`
+                let url = `http://qqj68zl3s.hd-bkt.clouddn.com/${response.key}`
                 this.view_picture.push({ url })
             }
         },
         messageSuccess(response, file, fileList) {
             if (file.status === 'success') {
-                let url = `http://pogpktyy6.bkt.clouddn.com/${response.key}`
+                let url = `http://qqj68zl3s.hd-bkt.clouddn.com/${response.key}`
                 this.message_picture.push({ url })
             }
         }
