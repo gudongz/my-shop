@@ -7,7 +7,7 @@ let qiniu = require('qiniu') // 需要加载qiniu模块的
 
 const accessKey = 'Nfl_o508VoLzbQP-lEr8Hz5j62_xOO2beL8a_2wJ'
 const secretKey = '3d4DgFfEfOUfo6fa_5mqFEha1Tk0NtT-gZQQoIKC'
-const bucket = 'shop'
+const bucket = 'aaass'
 
 let JsonWrite = function(res, ret) {
     if (ret.code) {
@@ -396,6 +396,7 @@ router.post('/addOrUpdateGoods', async (req, res) => {
             JsonWrite(res, { success: true })
         }
     } catch (error) {
+        console.log(error);
         JsonWrite(res, error)
     }
 })
